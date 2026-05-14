@@ -8,8 +8,11 @@
 FORCE=0
 while getopts "f" flag; do
  case $flag in
-  f) FORCE=1 ;;
-  \?) echo "Invalid option" ;;
+  f )
+    FORCE=1 ;;
+  \? )
+     echo "Invalid option, exiting..." 
+     exit 1;;
  esac
 done
 shift $((OPTIND-1))
