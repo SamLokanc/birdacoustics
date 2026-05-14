@@ -1,6 +1,10 @@
 #!/bin/bash
 
 # ----- Parse Flags -----
+# Flags:
+#  -f : if set the script will setup the scratch directory
+#       regardless of whether or not one from an earlier 
+#       date exists.
 FORCE=0
 while getopts "f" flag; do
  case $flag in
