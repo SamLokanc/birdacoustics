@@ -17,11 +17,6 @@ IN="${SCRATCH}/data/processed"
 OUT="${SCRATCH}/results"
 
 # ----- Directory Existance Sanity Check -----
-if [ ! -d "${SCRATCH}" ]; then
- echo "Scratch setup failed. Exiting..."
- exit 1
-fi
-
 if [ ! -d "${IN}" ]; then
  echo "Input directory does not exist. Exiting..."
  exit 1
