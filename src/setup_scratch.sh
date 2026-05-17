@@ -21,16 +21,6 @@ while getopts "f" flag; do
 done
 shift $(( OPTIND-1 ))
 
-# ----- Helper Function -----
-make_dir_if_absent() {
- local dir="$1"
- if [[ ! -d "$dir" ]]; then
-  echo "Creating ${dir} ..." >&2
-  mkdir "$dir"
-  echo "Done." >&2
- fi
-}
-
 # ----- Scratch Directory Creation -----
 # Check if no directory matching the pattern exists OR if the
 # force flag (-f) was set. If true create the directory based on
@@ -38,24 +28,37 @@ make_dir_if_absent() {
 # matching pattern already exists select the most recent one based on
 # date in the file name.
 if ( ! compgen -G "${SCRATCH_BASE}/${USER}/${USER}_birdacoustics_*" > /dev/null ) || (( FORCE )); then
- SCRATCH_DIR="${SCRATCH_BASE}/${USER}/${USER}_birdacoustics_$(date +%Y%m%d)"
- echo "Creating ${SCRATCH_DIR} ..." >&2
- mkdir "${SCRATCH_DIR}"
+ SCRATCH="${SCRATCH_BASE}/${USER}/${USER}_birdacoustics_$(date +%Y%m%d)"
+ echo "Creating ${SCRATCH} ..." >&2
+ mkdir "${SCRATCH}"
  echo "Done." >&2
 else
- SCRATCH_DIR=$(
+ SCRATCH=$(
   compgen -G "${SCRATCH_BASE}/${USER}/${USER}_birdacoustics_*" |
   sort -t_ -k3 -r |
   head -n 1)
- echo "${SCRATCH_DIR} already exists." >&2
+ echo "${SCRATCH} already exists." >&2
 fi
 
 # ----- Data and Results Directory Creation -----
-make_dir_if_absent "${SCRATCH_DIR}/results"
-make_dir_if_absent "${SCRATCH_DIR}/data" #this may move depending on if data gets imported to /scratch or /project
+# Check if the results directory exists. If it does not, create it.
+if [[ ! -d  "${SCRATCH}/results" ]]; then
+ echo "Creating results directory at ${SCRATCH}/results..." >&2
+ mkdir "${SCRATCH}/results"
+ echo "Done." >&2
+fi
+
+# Check if the data directory exists. If it does not, create it.
+if [[ ! -d "${SCRATCH}/data" ]]; then
+ echo "Creating data directory at ${SCRATCH}/data..." >&2
+ mkdir "${SCRATCH}/data"
+ echo "Done." >&2
+fi
 
 # ----- Sync Source Files -----
-rsync -av "${HOME}/birdacoustics/src" "${SCRATCH_DIR}/" >&2
+# Move all script files to the scratch directory since batch
+# jobs need to be submitted from there.
+rsync -av "${HOME}/birdacoustics/src" "${SCRATCH}/" >&2
 
-# ----- Send SCRATCH_DIR to stdout -----
-echo "${SCRATCH_DIR}"
+# ----- Send SCRATCH to stdout -----
+echo "${SCRATCH}"
