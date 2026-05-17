@@ -27,4 +27,5 @@ analyze.py \
  --date "${DATE}" \
  --lat 49.250 \
  --lon -123.236 \
- --threads 6
+ --threads 6 \
+ --rtype csv
