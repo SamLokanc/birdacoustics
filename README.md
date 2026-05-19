@@ -64,7 +64,7 @@ cd birdacoustics
 To run the analysis simply enter the following command from within the cloned repo:
 
 ```bash
-./src/submit.sh
+./src/00-submit.sh
 ```
 
 Then for the submitted job to finish.
