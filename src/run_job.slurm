@@ -14,12 +14,15 @@
 set -euo pipefail
 
 # ----- Set Directories -----
-SCRATCH="${SCRATCH}"
+# --- SCRATCH/ ---
 IN="${SCRATCH}/data/processed"
 OUT="${SCRATCH}/results"
 OUT_SLURM="${SCRATCH}/slurm"
 
+# --- PROJECT/ ---
 KALEIDOSCOPE="${PROJECT}/kaleidoscope/kaleidoscope-5.6.8.sif"
+
+# --- HOME/ ---
 SETTINGS="${HOME}/birdacoustics/config/settings.ini"
 
 # ----- Directory Existance Sanity Check -----
