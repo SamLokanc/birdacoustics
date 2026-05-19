@@ -45,7 +45,7 @@ Otherwise you can run:
 git clone https://github.com/SamLokanc/birdacoustics.git
 ```
 
-Once the repo is cloned navigate to the directory containing it using the following command:
+Once the repo is cloned, navigate to the directory containing it using the following command:
 
 ```bash
 cd birdacoustics
