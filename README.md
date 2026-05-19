@@ -26,7 +26,7 @@ flowchart LR
     A --> B 
     A --> D
     B -.-> C
-    C -.-> E
+    C -.-> D
     D --> E
 ```
 
