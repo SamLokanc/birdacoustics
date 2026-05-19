@@ -11,13 +11,13 @@ export PROJECT="/arc/project/st-mgmitche-1/"
 
 # ----- Directory Existance Sanity Check -----
 # Check SCRATCH is defined. If it does not exit the program.
-if [ -z "${SCRATCH}" ]; then
-  echo "Scratch setup failed. Exiting..."
+if [ ! -d "${SCRATCH}" ]; then
+  echo "ERROR: Scratch setup failed. Exiting..." >&2
   exit 1
 fi
 # Check PROJECT exists. If not exit the program.
-if [ -d "${PROJECT}" ]; then
-  echo "Project directory does not exist. Exiting..."
+if [ ! -d "${PROJECT}" ]; then
+  echo "ERROR: Project directory does not exist. Exiting..." >&2
   exit 1
 fi
 

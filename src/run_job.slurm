@@ -13,16 +13,11 @@
 
 set -euo pipefail
 
-# ----- Set Directories -----
-# --- SCRATCH/ ---
+# ----- Set Paths -----
 IN="${SCRATCH}/data/processed"
 OUT="${SCRATCH}/results"
 OUT_SLURM="${SCRATCH}/slurm"
-
-# --- PROJECT/ ---
 KALEIDOSCOPE="${PROJECT}/kaleidoscope/kaleidoscope-5.6.8.sif"
-
-# --- HOME/ ---
 SETTINGS="${HOME}/birdacoustics/config/settings.ini"
 
 # ----- Path Existance Sanity Check -----
