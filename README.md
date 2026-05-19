@@ -5,25 +5,25 @@
 Below is a table containing all the scripts (within in the `src/` directory) and their corresponding utility in the pipeline.
 | Script | Description |
 | --- | --- |
-| `analyze_hawkears.sh` | Loads `HawkEars` as a module and then runs an analysis. |
-| `convert_kaleidoscope.sh`| Uses the `Kaleidoscope` apptainer to batch convert input files to a consistent (.wav) format |
-| `run_job.slurm` | Contains slurm specifications. Calls `analyze_hawkears.sh`. |
-| `setup_scratch.sh` | Either creates or finds an existing scratch directory of the format `.../<user>/<user>_birdacoustics_<YYYYMMDD>`. |
-| `submit.sh` | Calls `setup_scratch.sh` then runs `run_job.slurm` as a slurm job. |
+| `00-submit.sh` | Calls `setup_scratch.sh` then runs `run_job.slurm` as a slurm job. |
+| `01-setup_scratch.sh` | Either creates or finds an existing scratch directory of the format `.../<user>/<user>_birdacoustics_<YYYYMMDD>`. |
+| `02-run_job.slurm` | Contains slurm specifications. Calls `analyze_hawkears.sh`. |
+| `03-convert_kaleidoscope.sh`| Uses the `Kaleidoscope` apptainer to batch convert input files to a consistent (.wav) format |
+| `04-analyze_hawkears.sh` | Loads `HawkEars` as a module and then runs an analysis. |
 
 ```mermaid
 flowchart LR
-    A("`**submit.sh**
+    A("`**00-submit.sh**
     <span style='font-size: 11px;'>Entry point</span>`")
-    B("`**setup_scratch.sh**
+    B("`**01-setup_scratch.sh**
     <span style='font-size: 11px;'>Creates/finds scratch dir </br> .../&ltuser&gt\_birdacoustics\_&ltYYYYMMDD&gt/ </span>`")
     C{{"`**Scratch Directory**
     <span style='font-size: 11px;'> Reused if already exists </span>`"}}
-    D("`**run_job.slurm.sh**
+    D("`**02-run_job.slurm.sh**
     <span style='font-size: 11px;'> Slurm job specifications </span>`")
-    E("`**analyze_hawkears.sh**
+    E("`**04-analyze_hawkears.sh**
     <span style='font-size: 11px;'> Loads HawkEars Module </br> Runs acoustic analysis</span>`")
-    F("`**convert_kaleidoscope.sh**
+    F("`**03-convert_kaleidoscope.sh**
     <span style='font-size: 11px;'> Converts all audio files to consistent (.wav) format</span>`")
     G{{"`**.wav files**`"}}
 
