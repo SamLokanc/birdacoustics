@@ -58,4 +58,4 @@ To run the analysis simply enter the following command from within the cloned re
 ./src/submit.sh
 ```
 
-Then simply wait for the submitted job to finish.
+Then for the submitted job to finish.
