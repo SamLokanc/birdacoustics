@@ -11,6 +11,8 @@
 #SBATCH --mail-user=samuel.lokanc@ubc.ca
 #SBATCH --mail-type=ALL
 
+set -euo pipefail
+
 # ----- Set Directories -----
 SCRATCH="${SCRATCH}"
 IN="${SCRATCH}/data/processed"
