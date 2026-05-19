@@ -15,7 +15,7 @@ flowchart LR
     A("`**submit.sh**
     <span style='font-size: 11px;'>Entry point</span>`")
     B("`**setup_scratch.sh**
-    <span style='font-size: 11px;'>Creates/finds scratch dir </br> &ltuser&gt\_birdacoustics\_&ltYYYYMMDD&gt\ </span>`")
+    <span style='font-size: 11px;'>Creates/finds scratch dir </br> &ltuser&gt\_birdacoustics\_&ltYYYYMMDD&gt/ </span>`")
     C{{"`**Scratch Directory**
     <span style='font-size: 11px;'> Reused if already exists </span>`"}}
     D("`**run_job.slurm.sh**
