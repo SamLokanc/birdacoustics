@@ -7,7 +7,7 @@ Below is a table containing all the scripts (within in the `src/` directory) and
 | --- | --- |
 | `analyze_hawkears.sh` | Loads `HawkEars` as a module and then runs an analysis. |
 | `run_job.slurm` | Contains slurm specifications. Calls `analyze_hawkears.sh`. |
-| `setup_scratch.sh` | Either creates or finds an existing scratch directory of the format `<username>_birdacoustics_<YYYYMMDD>`. |
+| `setup_scratch.sh` | Either creates or finds an existing scratch directory of the format `.../<user>/<user>_birdacoustics_<YYYYMMDD>`. |
 | `submit.sh` | Calls `setup_scratch.sh` then runs `run_job.slurm` as a slurm job. |
 
 ```mermaid
@@ -15,7 +15,7 @@ flowchart LR
     A("`**submit.sh**
     <span style='font-size: 11px;'>Entry point</span>`")
     B("`**setup_scratch.sh**
-    <span style='font-size: 11px;'>Creates/finds scratch dir </br> &ltuser&gt\_birdacoustics\_&ltYYYYMMDD&gt/ </span>`")
+    <span style='font-size: 11px;'>Creates/finds scratch dir </br> .../&ltuser&gt\_birdacoustics\_&ltYYYYMMDD&gt/ </span>`")
     C{{"`**Scratch Directory**
     <span style='font-size: 11px;'> Reused if already exists </span>`"}}
     D("`**run_job.slurm.sh**
