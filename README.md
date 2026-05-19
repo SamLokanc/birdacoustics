@@ -20,7 +20,7 @@ flowchart LR
     <span style='font-size: 11px;'> Reused if already exists </span>`"}}
     D("`**run_job.slurm.sh**
     <span style='font-size: 11px;'> Slurm job specifications </span>`")
-    E("`**analyze_hawkearas.sh**
+    E("`**analyze_hawkears.sh**
     <span style='font-size: 11px;'> Loads HawkEars Module </br> Runs acoustic analysis</span>`")
 
     A --> B 
