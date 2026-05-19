@@ -19,8 +19,8 @@ IN="${SCRATCH}/data/processed"
 OUT="${SCRATCH}/results"
 OUT_SLURM="${SCRATCH}/slurm"
 
-KALEIDOSCOPE="/arc/project/st-mgmitche-1/kaleidoscope/kaleidoscope-5.6.8.sif"
-SETTINGS="~/birdacoustics/config/settings.ini"
+KALEIDOSCOPE="${PROJECT}/kaleidoscope/kaleidoscope-5.6.8.sif"
+SETTINGS="${HOME}/birdacoustics/config/settings.ini"
 
 # ----- Directory Existance Sanity Check -----
 # Create slurm output directory if it does not already exist.

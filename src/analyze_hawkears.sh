@@ -18,7 +18,7 @@ done
 shift $(( OPTIND - 1 ))
 
 # ----- Load Hawkears Module -----
-module use "/arc/project/st-mgmitche-1/software/modulefiles"
+module use "${PROJECT}/software/modulefiles"
 module load "hawkers/1.0"
 
 # ----- Analyze File -----

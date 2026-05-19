@@ -2,8 +2,12 @@
 
 set -euo pipefail
 
-# ----- Setup Scratch Directory and Export -----
+# ----- Set Scratch Directory -----
 export SCRATCH=$(bash src/setup_scratch.sh)
+
+# ----- Set Project Directory -----
+export PROJECT="/arc/project/st-mgmitche-1/"
+
 
 # ----- Directory Existance Sanity Check -----
 # Check SCRATCH is defined. If it does not exit the program.
@@ -11,14 +15,17 @@ if [ -z "${SCRATCH}" ]; then
   echo "Scratch setup failed. Exiting..."
   exit 1
 fi
+# Check PROJECT exists. If not exit the program.
+if [ -d "${PROJECT}" ]; then
+  echo "Project directory does not exist. Exiting..."
+  exit 1
+fi
 
 # ----- Submit Slurm Job -----
 # This submits the slurm job from the scratch directory. This
 # is necessary on UBC sockeye because you cannot submit slurm
-# jobs from the home directory. It also exports SCRATCH as 
-# so that it can be used in child scripts.
+# jobs from the home directory.
 sbatch \
  --chdir="${SCRATCH}" \
- --export=ALL\
+ --export=ALL \
  "${SCRATCH}/src/run_job.slurm" "$@"
-
