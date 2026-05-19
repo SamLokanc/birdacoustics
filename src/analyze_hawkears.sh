@@ -12,7 +12,7 @@ while getopts "o:i:d:" flag; do
     o) OUTPUT="$OPTARG" ;;
     i) INPUT="$OPTARG" ;;
     d) DATE="$OPTARG" ;;
-    \?) echo "Invalid option: -$OPTARG, exiting..." >&2; exit 1 ;;
+    \?) echo "ERROR: Invalid option: -$OPTARG, exiting..." >&2; exit 1 ;;
   esac
 done
 shift $(( OPTIND - 1 ))

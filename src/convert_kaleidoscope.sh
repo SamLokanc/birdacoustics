@@ -10,7 +10,7 @@ while getopts "o:i:d:" flag; do
   case $flag in
     k) KALEIDOSCOPE="$OPTARG" ;;
     s) SETTINGS="$OPTARG" ;;
-    \?) echo "Invalid option: -$OPTARG, exiting..." >&2; exit 1 ;;
+    \?) echo "ERROR: Invalid option: -$OPTARG, exiting..." >&2; exit 1 ;;
   esac
 done
 shift $(( OPTIND - 1 ))

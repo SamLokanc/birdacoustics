@@ -25,18 +25,30 @@ KALEIDOSCOPE="${PROJECT}/kaleidoscope/kaleidoscope-5.6.8.sif"
 # --- HOME/ ---
 SETTINGS="${HOME}/birdacoustics/config/settings.ini"
 
-# ----- Directory Existance Sanity Check -----
+# ----- Path Existance Sanity Check -----
+# Exit program if input directory does not exist.
+if [ ! -d "${IN}" ]; then
+ echo "ERROR: Input directory does not exist. Exiting..." >&2
+ exit 1
+fi
+
+# Exit program if kaleidoscope image cannot be found
+if [ ! -f "${KALEIDOSCOPE}" ]; then
+ echo "ERROR: Kaleidoscope image does not exist at the specified path. Exiting..." >&2
+ exit 1
+fi
+
+# Exit programs if kaleidoscope config cannot be found
+if [ ! -f "${SETTINGS}" ]; then
+ echo "ERROR: Kaleidoscope settings file does not exist at the specified path. Exiting..." >&2
+ exit 1
+fi
+
 # Create slurm output directory if it does not already exist.
 if [ ! -d "${OUT_SLURM}" ]; then
  echo "Creating slurm directory at ${OUT_SLURM}..." >&2
  mkdir "${OUT_SLURM}"
  echo "Done." >&2
-fi
-
-# Exit program if input directory does not exist.
-if [ ! -d "${IN}" ]; then
- echo "Input directory does not exist. Exiting..." >&2
- exit 1
 fi
 
 # Create output directory if it does not already exist.

@@ -12,11 +12,8 @@ SCRATCH_BASE="/scratch/st-mgmitche-1" #move alloc name to .env?
 FORCE=0
 while getopts "f" flag; do
  case $flag in
-  f )
-    FORCE=1 ;;
-  \? )
-     echo "Invalid option, exiting..." >&2
-     exit 1;;
+  f) FORCE=1 ;;
+  \?) echo "ERROR: Invalid option, exiting..." >&2; exit 1;;
  esac
 done
 shift $(( OPTIND-1 ))
