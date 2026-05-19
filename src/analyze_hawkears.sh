@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 # ----- Parse Arguments -----
 # Flags:
 #  -o : output. Takes path to output directory as an argument.

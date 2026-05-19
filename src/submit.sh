@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -euo pipefail
+
 # ----- Setup Scratch Directory and Export -----
 export SCRATCH=$(bash src/setup_scratch.sh)
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 # ----- Parse Arguments -----
 # Flags:
 #  -k : Path to Kaleidoscope.sif file
