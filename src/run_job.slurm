@@ -17,6 +17,9 @@ IN="${SCRATCH}/data/processed"
 OUT="${SCRATCH}/results"
 OUT_SLURM="${SCRATCH}/slurm"
 
+KALEIDOSCOPE="/arc/project/st-mgmitche-1/kaleidoscope/kaleidoscope-5.6.8.sif"
+SETTINGS="~/birdacoustics/config/settings.ini"
+
 # ----- Directory Existance Sanity Check -----
 # Create slurm output directory if it does not already exist.
 if [ ! -d "${OUT_SLURM}" ]; then
@@ -37,6 +40,11 @@ if [ ! -d "${OUT}" ]; then
  mkdir "${OUT}"
  echo "Done." >&2
 fi
+
+# ----- Run File Conversion -----
+# bash src/convert_kaleidoscope.sh \
+#  -k "${KALEIDOSCOPE}" \
+#  -s "${SETTINGS}"
 
 # ----- Run Analysis -----
 bash src/analyze_hawkears.sh \
