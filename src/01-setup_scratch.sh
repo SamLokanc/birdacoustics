@@ -55,7 +55,7 @@ fi
 # ----- Sync Source Files -----
 # Move all script files to the scratch directory since batch
 # jobs need to be submitted from there.
-rsync -av "${HOME}/birdacoustics/src" "${SCRATCH}/" >&2
+rsync -a "${HOME}/birdacoustics/src" "${SCRATCH}/" >&2
 
 # ----- Send SCRATCH to stdout -----
 echo "${SCRATCH}"

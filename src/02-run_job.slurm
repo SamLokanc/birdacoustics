@@ -54,12 +54,12 @@ if [ ! -d "${OUT}" ]; then
 fi
 
 # ----- Run File Conversion -----
-# bash src/convert_kaleidoscope.sh \
+# bash src/03-convert_kaleidoscope.sh \
 #  -k "${KALEIDOSCOPE}" \
 #  -s "${SETTINGS}"
 
 # ----- Run Analysis -----
-bash src/analyze_hawkears.sh \
+bash src/04-analyze_hawkears.sh \
  -i "${IN}" \
  -o "${OUT}" \
  -d 20260516

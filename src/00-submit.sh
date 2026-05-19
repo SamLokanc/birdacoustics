@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # ----- Set Scratch Directory -----
-export SCRATCH=$(bash src/setup_scratch.sh)
+export SCRATCH=$(bash src/01-setup_scratch.sh)
 
 # ----- Set Project Directory -----
 export PROJECT="/arc/project/st-mgmitche-1/"
@@ -28,4 +28,4 @@ fi
 sbatch \
  --chdir="${SCRATCH}" \
  --export=ALL \
- "${SCRATCH}/src/run_job.slurm" "$@"
+ "${SCRATCH}/src/02-run_job.slurm" "$@"
