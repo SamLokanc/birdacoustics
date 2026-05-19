@@ -6,6 +6,7 @@ Below is a table containing all the scripts (within in the `src/` directory) and
 | Script | Description |
 | --- | --- |
 | `analyze_hawkears.sh` | Loads `HawkEars` as a module and then runs an analysis. |
+| `convert_kaleidoscope.sh`| Uses the `Kaleidoscope` apptainer to batch convert input files to a consistent (.wav) format |
 | `run_job.slurm` | Contains slurm specifications. Calls `analyze_hawkears.sh`. |
 | `setup_scratch.sh` | Either creates or finds an existing scratch directory of the format `.../<user>/<user>_birdacoustics_<YYYYMMDD>`. |
 | `submit.sh` | Calls `setup_scratch.sh` then runs `run_job.slurm` as a slurm job. |
@@ -22,12 +23,18 @@ flowchart LR
     <span style='font-size: 11px;'> Slurm job specifications </span>`")
     E("`**analyze_hawkears.sh**
     <span style='font-size: 11px;'> Loads HawkEars Module </br> Runs acoustic analysis</span>`")
+    F("`**convert_kaleidoscope.sh**
+    <span style='font-size: 11px;'> Converts all audio files to consistent (.wav) format</span>`")
+    G{{"`**.wav files**`"}}
 
     A --> B 
     A --> D
     B -.-> C
     C -.-> D
     D --> E
+    D --> F
+    F -.-> G
+    G -.-> E
 ```
 
 ## Prerequisites / Setup
