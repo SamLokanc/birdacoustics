@@ -43,12 +43,14 @@ This data pipeline is intended to be run on an ARC computing cluster environment
 If you have an ssh key set up on the cluster (**recommended for security** [see this guide here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)),
 
 ```bash
+cd ~
 git clone git@github.com:SamLokanc/birdacoustics.git
 ```
 
 Otherwise you can run:
 
 ```bash
+cd ~
 git clone https://github.com/SamLokanc/birdacoustics.git
 ```
 
