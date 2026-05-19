@@ -31,13 +31,13 @@ flowchart LR
 ```
 
 ## Prerequisites / Setup
-This data pipeline is intended to be run on an ARC computing cluster environment that uses the SLURM workload manager. More, specifically, it is intended to be run on the University of British Columbia's [Sockeye computing cluster](https://arc.ubc.ca/compute-storage/ubc-arc-sockeye). Clone this repository by navigating to your home directory on the computing cluster and entering one of the following command:
+This data pipeline is intended to be run on an ARC computing cluster environment that uses the SLURM workload manager. More specifically, it is intended to run on the University of British Columbia's [Sockeye computing cluster](https://arc.ubc.ca/compute-storage/ubc-arc-sockeye). Clone this repository by navigating to your home directory on the computing cluster and entering one of the following commands:
 
 ```bash
 git clone https://github.com/SamLokanc/birdacoustics.git
 ```
 
-Or if you have an ssh key set up on the cluster (recommended for security),
+Or if you have an ssh key set up on the cluster (**recommended for security** [see this guide here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)),
 
 ```bash
 git clone git@github.com:SamLokanc/birdacoustics.git
