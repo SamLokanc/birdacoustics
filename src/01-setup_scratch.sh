@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-SCRATCH_BASE="/scratch/st-mgmitche-1" #move alloc name to .env?
-
 # ----- Parse Flags -----
 # Flags:
 #  -f : if set the script will setup the scratch directory

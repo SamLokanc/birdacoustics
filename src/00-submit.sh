@@ -3,7 +3,9 @@
 set -euo pipefail
 
 # ----- Set Scratch Directory -----
+export SCRATCH_BASE="/scratch/st-mgmitche-1" #move alloc name to .env?
 export SCRATCH=$(bash src/01-setup_scratch.sh)
+unset SCRATCH_BASE
 
 # ----- Set Project Directory -----
 export PROJECT="/arc/project/st-mgmitche-1/"
