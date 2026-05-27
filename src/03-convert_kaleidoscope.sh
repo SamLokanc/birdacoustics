@@ -15,8 +15,12 @@ while getopts "o:i:d:" flag; do
 done
 shift $(( OPTIND - 1 ))
 
+# ----- Load Apptainer and gcc Modules -----
+module load gcc/9.4.0 apptainer/1.3.1
+
 # ----- Run Kaleidoscope File Conversion -----
 apptainer \
- exec KALEIDOSCOPE \
+ exec "${KALEIDOSCOPE}" \
  kaleidoscope-cli \
+ --accept-license \
  --batch SETTINGS
