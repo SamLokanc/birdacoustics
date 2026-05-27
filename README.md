@@ -1,5 +1,10 @@
 # birdacoustics
 ## Project Overview
+
+Birds serve as great bioindicators since they occupy a wide range of habitats and their populations respond quickly to environmental change (Kułaga, 2019). It is therefore advantageous to monitor bird populations since they allow for the quick detection of environmental stresses over the entire ecosystem. Detecting these changes is imperitive to measure the impacts of our own development on ecosystems as well as evaluate any measures being taken to remedy our harms. 
+
+This project aims to leverage the use of acoustic data in the monitoring of bird populations, particularly through the use of HawkEars, a machine learning-based approach for acoustic classification of avian species (Huus, 2025). Affiliated with the University of British Columbia, the data for this project comes from acoustic recorders placed in the greater Vancouver area. The scripts contained in this project act as an end-to-end pipeline to process raw acoustic recordings, generate insights, and display valuable information in a digestible format, the ultimate goal of which is to contribute to sustainable development and preserving ecosystem health.
+
 ## Workflow
 
 Below is a table containing all the scripts (within in the `src/` directory) and their corresponding utility in the pipeline.
@@ -68,3 +73,8 @@ To run the analysis simply enter the following command from within the cloned re
 ```
 
 Then for the submitted job to finish.
+
+## References
+Huus, J., Kelly, K. G., Bayne, E. M., & Knight, E. C. (2025). HawkEars: A regional, high-performance avian acoustic classifier. Ecological Informatics, 87, 103122.
+
+Kułaga, K., & Budka, M. (2019). Bird species detection by an observer and an autonomous sound recorder in two different environments: Forest and farmland. PLoS One, 14(2), e0211970.
