@@ -6,11 +6,12 @@ set -euo pipefail
 #  -s : Path to settings.ini file
 #  -i : Path to the input directory
 #  -o : Path to the output directory
-while getopts "s:i:o:" flag; do
+while getopts "s:i:o:t:" flag; do
   case $flag in
     s) SETTINGS="$OPTARG" ;;
     i) IN="$OPTARG" ;;
     o) OUT="$OPTARG" ;;
+    t) THREADS="$OPTARG" ;;
     \?) echo "ERROR: Invalid option: -$OPTARG, exiting..." >&2; exit 1 ;;
   esac
 done
@@ -23,7 +24,7 @@ version=5.6.8
 
 [global]
 mode=1
-threads=6
+threads=${THREADS}
 
 [input]
 directory="${IN}"

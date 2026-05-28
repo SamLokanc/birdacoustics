@@ -30,24 +30,20 @@ else
  echo " kaleidoscope.sif exists." >&2
 fi
 
-# Write the settings.ini file if it cannot be found
-echo "Checking if ${SETTINGS} exists..." >&2
-if [ ! -f "${SETTINGS}" ]; then
- echo " Kaleidoscope settings file could not be found. Creating new..." >&2
- bash src/03-initialize_kaleidoscope.sh \
-  -s "${SETTINGS}" \
-  -i "${IN_RAW}" \
-  -o "${IN_PROCESSED}"
- echo "  Done." >&2
-else
- echo " settings.ini exists." >&2
-fi
+# Write the settings.ini file. Do this no matter if it already exists.
+echo "Writing new Kaleidoscope settings file at ${SETTINGS}..." >&2
+bash src/03-initialize_kaleidoscope.sh \
+ -s "${SETTINGS}" \
+ -i "${IN_RAW}" \
+ -o "${IN_PROCESSED}" \
+ -t "${SLURM_CPUS_PER_TASK}"
+echo "  Done." >&2
 
 # ----- Run File Conversion -----
 #echo "Running file conversion..."
 #bash src/04-convert_kaleidoscope.sh \
 # -k "${KALEIDOSCOPE}" \
-# -s "${SETTINGS}"
+# -s "${SETTINGS}" \
 #echo " Done."
 
 # ----- Run Analysis -----
@@ -55,6 +51,7 @@ fi
 #bash src/05-analyze_hawkears.sh \
 # -i "${IN}" \
 # -o "${OUT}" \
-# -d 20260516
+# -d 20260516 \
+# -t "${SLURM_CPUS_PER_TASK}"
 #echo " Done."
 

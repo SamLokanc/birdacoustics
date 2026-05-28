@@ -7,11 +7,13 @@ set -euo pipefail
 #  -o : output. Takes path to output directory as an argument.
 #  -i : input. Takes path to input directory as an argument.
 #  -d : date. Takes date of recording as argument.
-while getopts "o:i:d:" flag; do
+#  -t : number of threads. Takes ${SLURM_CPUS_PER_TASK} as argument.
+while getopts "o:i:d:t:" flag; do
   case $flag in
     o) OUTPUT="$OPTARG" ;;
     i) INPUT="$OPTARG" ;;
     d) DATE="$OPTARG" ;;
+    t) THREADS="$OPTARG" ;;
     \?) echo "ERROR: Invalid option: -$OPTARG, exiting..." >&2; exit 1 ;;
   esac
 done
@@ -29,5 +31,5 @@ analyze.py \
  --date "${DATE}" \
  --lat 49.250 \
  --lon -123.236 \
- --threads 6 \
+ --threads "${THREADS}" \
  --rtype csv
