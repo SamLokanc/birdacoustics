@@ -13,11 +13,12 @@ Below is a table containing all the scripts (within in the `src/` directory) and
 | `00-submit.sh` | Calls `setup_scratch.sh` then runs `run_job.slurm` as a slurm job. |
 | `01-setup_scratch.sh` | Either creates or finds an existing scratch directory of the format `.../<user>/<user>_birdacoustics_<YYYYMMDD>`. |
 | `02-run_job.slurm` | Contains slurm specifications. Calls `analyze_hawkears.sh`. |
-| `03-convert_kaleidoscope.sh`| Uses the `Kaleidoscope` apptainer to batch convert input files to a consistent (.wav) format |
-| `04-analyze_hawkears.sh` | Loads `HawkEars` as a module and then runs an analysis. |
+| `03-initialize_kaleidoscope.sh` | Creates the `settings.ini` file required for Kaleidoscope to run the batch conversion. |
+| `04-convert_kaleidoscope.sh`| Uses the `Kaleidoscope` apptainer to batch convert input files (.w4v) to a consistent (.wav) format |
+| `05-analyze_hawkears.sh` | Loads `HawkEars` as a module and then runs an analysis. |
 
 ```mermaid
-flowchart LR
+flowchart TD
     A("`**00-submit.sh**
     <span style='font-size: 11px;'>Entry point</span>`")
     B("`**01-setup_scratch.sh**
@@ -26,11 +27,15 @@ flowchart LR
     <span style='font-size: 11px;'> Reused if already exists </span>`"}}
     D("`**02-run_job.slurm.sh**
     <span style='font-size: 11px;'> Slurm job specifications </span>`")
-    E("`**04-analyze_hawkears.sh**
+    E("`**05-analyze_hawkears.sh**
     <span style='font-size: 11px;'> Loads HawkEars Module </br> Runs acoustic analysis</span>`")
-    F("`**03-convert_kaleidoscope.sh**
+    F("`**04-convert_kaleidoscope.sh**
     <span style='font-size: 11px;'> Converts all audio files to consistent (.wav) format</span>`")
     G{{"`**.wav files**`"}}
+    H("`**03-initialize_kaleidoscope.sh**
+    <span style='font-size: 11px;'> creates the settings.ini file required for file conversion</span>`")
+    I{{"`**settings.ini**`"}}
+
 
     A --> B 
     A --> D
@@ -38,6 +43,9 @@ flowchart LR
     C -.-> D
     D --> E
     D --> F
+    D --> H
+    H --> I
+    I -.-> F
     F -.-> G
     G -.-> E
 ```
