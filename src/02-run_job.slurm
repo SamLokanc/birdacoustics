@@ -17,50 +17,73 @@ set -euo pipefail
 IN="${SCRATCH}/data/processed"
 OUT="${SCRATCH}/results"
 OUT_SLURM="${SCRATCH}/slurm"
+SETTINGS="${SCRATCH}/settings.ini"
 KALEIDOSCOPE="${PROJECT}/kaleidoscope/kaleidoscope-5.6.8.sif"
-SETTINGS="${HOME}/birdacoustics/config/settings.ini"
 
 # ----- Path Existance Sanity Check -----
 # Exit program if input directory does not exist.
+echo "Checking if ${IN} exists..." >&2
 if [ ! -d "${IN}" ]; then
- echo "ERROR: Input directory does not exist. Exiting..." >&2
+ echo " ERROR: Input directory does not exist. Exiting..." >&2
  exit 1
+else
+ echo " Input directory exists." >&2
 fi
 
 # Exit program if kaleidoscope image cannot be found
+echo "Checking if ${KALEIDOSCOPE} exists..." >&2
 if [ ! -f "${KALEIDOSCOPE}" ]; then
- echo "ERROR: Kaleidoscope image does not exist at the specified path. Exiting..." >&2
+ echo " ERROR: Kaleidoscope image does not exist at the specified path. Exiting..." >&2
  exit 1
+else
+ echo " kaleidoscope.sif exists." >&2
 fi
 
-# Exit programs if kaleidoscope config cannot be found
+# Write the settings.ini file if it cannot be found
+echo "Checking if ${SETTINGS} exists..." >&2
 if [ ! -f "${SETTINGS}" ]; then
- echo "ERROR: Kaleidoscope settings file does not exist at the specified path. Exiting..." >&2
- exit 1
+ echo " Kaleidoscope settings file could not be found. Creating new..." >&2
+ bash src/03-initialize_kaleidoscope.sh \
+  -s "${SETTINGS}" \
+  -i "${IN}" \
+  -o "${OUT}"
+ echo " Done." >&2
+else
+ echo " settings.ini exists." >&2
 fi
 
 # Create slurm output directory if it does not already exist.
+echo "Checking if ${OUT_SLURM} exists..." >&2
 if [ ! -d "${OUT_SLURM}" ]; then
- echo "Creating slurm directory at ${OUT_SLURM}..." >&2
+ echo " Creating slurm directory at ${OUT_SLURM}..." >&2
  mkdir "${OUT_SLURM}"
- echo "Done." >&2
+ echo " Done." >&2
+else
+ echo " slurm/ already exists." >&2
 fi
 
 # Create output directory if it does not already exist.
+echo "Checking if ${OUT} exists..."
 if [ ! -d "${OUT}" ]; then
- echo "Creating output directory at ${OUT}..." >&2
+ echo " Creating output directory at ${OUT}..." >&2
  mkdir "${OUT}"
- echo "Done." >&2
+ echo " Done." >&2
+else
+ echo " results/ already exists."
 fi
 
 # ----- Run File Conversion -----
-# bash src/03-convert_kaleidoscope.sh \
-#  -k "${KALEIDOSCOPE}" \
-#  -s "${SETTINGS}"
+#echo "Running file conversion..."
+#bash src/04-convert_kaleidoscope.sh \
+# -k "${KALEIDOSCOPE}" \
+# -s "${SETTINGS}"
+#echo "Done."
 
 # ----- Run Analysis -----
-bash src/04-analyze_hawkears.sh \
- -i "${IN}" \
- -o "${OUT}" \
- -d 20260516
+#echo "Running HawkEars analysis..."
+#bash src/05-analyze_hawkears.sh \
+# -i "${IN}" \
+# -o "${OUT}" \
+# -d 20260516
+#echo "Done."
 
