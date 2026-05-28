@@ -12,7 +12,7 @@ Below is a table containing all the scripts (within in the `src/` directory) and
 | --- | --- |
 | `00-submit.sh` | Calls `setup_scratch.sh` then runs `run_job.slurm` as a slurm job. |
 | `01-setup_scratch.sh` | Either creates or finds an existing scratch directory of the format `.../<user>/<user>_birdacoustics_<YYYYMMDD>`. |
-| `02-run_job.slurm` | Contains slurm specifications. Calls `analyze_hawkears.sh`. |
+| `02-run_job.slurm` | Contains slurm specifications. Calls `03-initialize_kaleidoscope.sh`, `04-convert_kaleidoscope.sh`, `05-analyze_hawkears.sh`. |
 | `03-initialize_kaleidoscope.sh` | Creates the `settings.ini` file required for Kaleidoscope to run the batch conversion. |
 | `04-convert_kaleidoscope.sh`| Uses the `Kaleidoscope` apptainer to batch convert input files (.w4v) to a consistent (.wav) format |
 | `05-analyze_hawkears.sh` | Loads `HawkEars` as a module and then runs an analysis. |
