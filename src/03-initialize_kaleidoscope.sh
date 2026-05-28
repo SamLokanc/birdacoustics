@@ -3,9 +3,10 @@ set -euo pipefail
 
 # ----- Parse Arguments -----
 # Flags:
-#  -s : Path to settings.ini file
-#  -i : Path to the input directory
-#  -o : Path to the output directory
+#  -s : Path to settings.ini file.
+#  -i : Path to the input directory.
+#  -o : Path to the output directory.
+#  -t : Number of threads.
 while getopts "s:i:o:t:" flag; do
   case $flag in
     s) SETTINGS="$OPTARG" ;;
