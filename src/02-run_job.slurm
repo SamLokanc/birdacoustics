@@ -17,31 +17,10 @@ set -euo pipefail
 IN_RAW="${SCRATCH}/data/raw"
 IN_PROCESSED="${SCRATCH}/data/processed"
 OUT="${SCRATCH}/results"
-OUT_SLURM="${SCRATCH}/slurm"
 SETTINGS="${SCRATCH}/settings.ini"
 KALEIDOSCOPE="${PROJECT}/kaleidoscope/kaleidoscope-5.6.8.sif"
 
 # ----- Setup -----
-# Create Kaleidoscope input directory if it does not exist.
-echo "Checking if ${IN_RAW} exists..." >&2
-if [ ! -d "${IN_RAW}" ]; then
- echo " Creating Kaleidoscope input directory at ${IN_RAW}..." >&2
- mkdir "${IN_RAW}"
- echo "  Done." >&2
-else
- echo " Kaleidoscope input directory already exists." >&2
-fi
-
-# Create Hawkears input directory if it does not exist.
-echo "Checking if ${IN_PROCESSED} exists..." >&2
-if [ ! -d "${IN_PROCESSED}" ]; then
- echo " Creating HawkEars input directory at ${IN_RAW}..." >&2
- mkdir "${IN_PROCESSED}"
- echo "  Done." >&2
-else
- echo " HawkEars input directory already exists." >&2
-fi
-
 # Exit program if kaleidoscope image cannot be found
 echo "Checking if ${KALEIDOSCOPE} exists..." >&2
 if [ ! -f "${KALEIDOSCOPE}" ]; then
@@ -62,26 +41,6 @@ if [ ! -f "${SETTINGS}" ]; then
  echo "  Done." >&2
 else
  echo " settings.ini exists." >&2
-fi
-
-# Create slurm output directory if it does not already exist.
-echo "Checking if ${OUT_SLURM} exists..." >&2
-if [ ! -d "${OUT_SLURM}" ]; then
- echo " Creating slurm directory at ${OUT_SLURM}..." >&2
- mkdir "${OUT_SLURM}"
- echo "  Done." >&2
-else
- echo " slurm/ already exists." >&2
-fi
-
-# Create output directory if it does not already exist.
-echo "Checking if ${OUT} exists..."
-if [ ! -d "${OUT}" ]; then
- echo " Creating output directory at ${OUT}..." >&2
- mkdir "${OUT}"
- echo "  Done." >&2
-else
- echo " results/ already exists."
 fi
 
 # ----- Run File Conversion -----

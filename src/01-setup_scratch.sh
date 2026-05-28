@@ -22,32 +22,69 @@ shift $(( OPTIND-1 ))
 # convention: in scratch/user/user_project_YYYYMMDD. If directory(ies)
 # matching pattern already exists select the most recent one based on
 # date in the file name.
+echo "Checking if Scratch directory exists..." >&2
 if ( ! compgen -G "${SCRATCH_BASE}/${USER}/${USER}_birdacoustics_*" > /dev/null ) || (( FORCE )); then
  SCRATCH="${SCRATCH_BASE}/${USER}/${USER}_birdacoustics_$(date +%Y%m%d)"
- echo "Creating ${SCRATCH} ..." >&2
+ echo " Creating ${SCRATCH} ..." >&2
  mkdir "${SCRATCH}"
- echo "Done." >&2
+ echo "  Done." >&2
 else
  SCRATCH=$(
   compgen -G "${SCRATCH_BASE}/${USER}/${USER}_birdacoustics_*" |
   sort -t_ -k3 -r |
   head -n 1)
- echo "${SCRATCH} already exists." >&2
+ echo " ${SCRATCH} already exists." >&2
 fi
 
 # ----- Data and Results Directory Creation -----
 # Check if the results directory exists. If it does not, create it.
+echo "Checking if results directory exists..." >&2
 if [[ ! -d  "${SCRATCH}/results" ]]; then
- echo "Creating results directory at ${SCRATCH}/results..." >&2
+ echo " Creating results directory at ${SCRATCH}/results..." >&2
  mkdir "${SCRATCH}/results"
- echo "Done." >&2
+ echo "  Done." >&2
+else
+ echo " Results directory already exists." >&2
 fi
 
 # Check if the data directory exists. If it does not, create it.
+echo "Checking if data directory exists..." >&2
 if [[ ! -d "${SCRATCH}/data" ]]; then
- echo "Creating data directory at ${SCRATCH}/data..." >&2
+ echo " Creating data directory at ${SCRATCH}/data..." >&2
  mkdir "${SCRATCH}/data"
- echo "Done." >&2
+ echo "  Done." >&2
+else
+ echo " Data directory already exists." >&2
+fi
+
+# Check if raw data directory exists. If it does not create it.
+echo "Checking if raw data directory exists..." >&2
+if [[ ! -d "${SCRATCH}/data/raw" ]]; then
+ echo " Creating raw data directory at ${SCRATCH}/data/raw..." >&2
+ mkdir "${SCRATCH}/data/raw"
+ echo "  Done." >&2
+else
+ echo " Raw data directory already exists." >&2
+fi
+
+# Check if processed data directory exists. If it does not create it.
+echo "Checking if processed data directory exists..." >&2
+if [[ ! -d "${SCRATCH}/data/processed" ]]; then
+ echo " Creating processed data directory at ${SCRATCH}/data/processed..." >&2
+ mkdir "${SCRATCH}/data/processed"
+ echo "  Done." >&2
+else
+ echo " Processed data directory already exists." >&2
+fi
+
+# Check if slurm directory exists. If it does not create it.
+echo "Checking if slurm log directory exists..." >&2
+if [[ ! -d "${SCRATCH}/slurm" ]]; then
+ echo " Creating slurm log directory at ${SCRATCH}/slurm..." >&2
+ mkdir "${SCRATCH}/slurm"
+ echo "  Done." >&2
+else
+ echo " Processed data directory already exists." >&2
 fi
 
 # ----- Sync Source Files -----
@@ -57,3 +94,4 @@ rsync -a "${HOME}/birdacoustics/src" "${SCRATCH}/" >&2
 
 # ----- Send SCRATCH to stdout -----
 echo "${SCRATCH}"
+
