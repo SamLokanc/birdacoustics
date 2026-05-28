@@ -14,20 +14,32 @@
 set -euo pipefail
 
 # ----- Set Paths -----
-IN="${SCRATCH}/data/processed"
+IN_RAW="${SCRATCH}/data/raw"
+IN_PROCESSED="${SCRATCH}/data/processed"
 OUT="${SCRATCH}/results"
 OUT_SLURM="${SCRATCH}/slurm"
 SETTINGS="${SCRATCH}/settings.ini"
 KALEIDOSCOPE="${PROJECT}/kaleidoscope/kaleidoscope-5.6.8.sif"
 
-# ----- Path Existance Sanity Check -----
-# Exit program if input directory does not exist.
-echo "Checking if ${IN} exists..." >&2
-if [ ! -d "${IN}" ]; then
- echo " ERROR: Input directory does not exist. Exiting..." >&2
- exit 1
+# ----- Setup -----
+# Create Kaleidoscope input directory if it does not exist.
+echo "Checking if ${IN_RAW} exists..." >&2
+if [ ! -d "${IN_RAW}" ]; then
+ echo " Creating Kaleidoscope input directory at ${IN_RAW}..." >&2
+ mkdir "${IN_RAW}"
+ echo "  Done." >&2
 else
- echo " Input directory exists." >&2
+ echo " Kaleidoscope input directory already exists." >&2
+fi
+
+# Create Hawkears input directory if it does not exist.
+echo "Checking if ${IN_PROCESSED} exists..." >&2
+if [ ! -d "${IN_PROCESSED}" ]; then
+ echo " Creating HawkEars input directory at ${IN_RAW}..." >&2
+ mkdir "${IN_PROCESSED}"
+ echo "  Done." >&2
+else
+ echo " HawkEars input directory already exists." >&2
 fi
 
 # Exit program if kaleidoscope image cannot be found
@@ -45,8 +57,8 @@ if [ ! -f "${SETTINGS}" ]; then
  echo " Kaleidoscope settings file could not be found. Creating new..." >&2
  bash src/03-initialize_kaleidoscope.sh \
   -s "${SETTINGS}" \
-  -i "${IN}" \
-  -o "${OUT}"
+  -i "${IN_RAW}" \
+  -o "${IN_PROCESSED}"
  echo "  Done." >&2
 else
  echo " settings.ini exists." >&2
