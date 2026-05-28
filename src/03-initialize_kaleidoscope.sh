@@ -19,6 +19,8 @@ shift $(( OPTIND - 1 ))
 
 # ----- Write settings.ini File -----
 cat > "${SETTINGS}" <<EOF
+version=5.6.8
+
 [global]
 mode=1
 threads=6
@@ -26,6 +28,7 @@ threads=6
 [input]
 directory="${IN}"
 subdirs=1
+MetaForm=Default Project Form
 
 [input/wac]
 enable=0
