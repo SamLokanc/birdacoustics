@@ -18,7 +18,7 @@ Below is a table containing all the scripts (within in the `src/` directory) and
 | `05-analyze_hawkears.sh` | Loads `HawkEars` as a module and then runs an analysis. |
 
 ```mermaid
-flowchart LR
+flowchart TD
     A("`**00-submit.sh**
     <span style='font-size: 11px;'>Entry point</span>`")
     B("`**01-setup_scratch.sh**
