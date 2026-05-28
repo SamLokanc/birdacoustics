@@ -47,7 +47,7 @@ if [ ! -f "${SETTINGS}" ]; then
   -s "${SETTINGS}" \
   -i "${IN}" \
   -o "${OUT}"
- echo " Done." >&2
+ echo "  Done." >&2
 else
  echo " settings.ini exists." >&2
 fi
@@ -57,7 +57,7 @@ echo "Checking if ${OUT_SLURM} exists..." >&2
 if [ ! -d "${OUT_SLURM}" ]; then
  echo " Creating slurm directory at ${OUT_SLURM}..." >&2
  mkdir "${OUT_SLURM}"
- echo " Done." >&2
+ echo "  Done." >&2
 else
  echo " slurm/ already exists." >&2
 fi
@@ -67,7 +67,7 @@ echo "Checking if ${OUT} exists..."
 if [ ! -d "${OUT}" ]; then
  echo " Creating output directory at ${OUT}..." >&2
  mkdir "${OUT}"
- echo " Done." >&2
+ echo "  Done." >&2
 else
  echo " results/ already exists."
 fi
@@ -77,7 +77,7 @@ fi
 #bash src/04-convert_kaleidoscope.sh \
 # -k "${KALEIDOSCOPE}" \
 # -s "${SETTINGS}"
-#echo "Done."
+#echo " Done."
 
 # ----- Run Analysis -----
 #echo "Running HawkEars analysis..."
@@ -85,5 +85,5 @@ fi
 # -i "${IN}" \
 # -o "${OUT}" \
 # -d 20260516
-#echo "Done."
+#echo " Done."
 
