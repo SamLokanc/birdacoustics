@@ -6,7 +6,7 @@ set -euo pipefail
 # Flags:
 #  -k : Path to Kaleidoscope.sif file
 #  -s : Path to settings.ini file
-while getopts "o:i:d:" flag; do
+while getopts "k:s:" flag; do
   case $flag in
     k) KALEIDOSCOPE="$OPTARG" ;;
     s) SETTINGS="$OPTARG" ;;
