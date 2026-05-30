@@ -23,4 +23,4 @@ apptainer \
  exec "${KALEIDOSCOPE}" \
  kaleidoscope-cli \
  --accept-license \
- --batch SETTINGS
+ --batch "${SETTINGS}"
