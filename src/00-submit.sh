@@ -48,4 +48,5 @@ fi
 sbatch \
  --chdir="${SCRATCH}" \
  --export=ALL \
+ --nodelist=se007 \
  "${SCRATCH}/src/02-run_job.slurm" "$@"
