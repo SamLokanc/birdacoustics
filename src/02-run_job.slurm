@@ -40,18 +40,18 @@ bash src/03-initialize_kaleidoscope.sh \
 echo "  Done." >&2
 
 # ----- Run File Conversion -----
-#echo "Running file conversion..." >&2
-#bash src/04-convert_kaleidoscope.sh \
-# -k "${KALEIDOSCOPE}" \
-# -s "${SETTINGS}" \
-#echo " Done." >&2
+echo "Running file conversion..." >&2
+bash src/04-convert_kaleidoscope.sh \
+ -k "${KALEIDOSCOPE}" \
+ -s "${SETTINGS}" \
+echo " Done." >&2
 
 # ----- Run Analysis -----
-#echo "Running HawkEars analysis..." >&2
-#bash src/05-analyze_hawkears.sh \
-# -i "${IN_PROCESSED}" \
-# -o "${OUT}" \
-# -d 20260516 \
-# -t "${SLURM_CPUS_PER_TASK}"
-#echo " Done." >&2
+echo "Running HawkEars analysis..." >&2
+bash src/05-analyze_hawkears.sh \
+ -i "${IN_PROCESSED}" \
+ -o "${OUT}" \
+ -d 20260516 \
+ -t "${SLURM_CPUS_PER_TASK}"
+echo " Done." >&2
 
