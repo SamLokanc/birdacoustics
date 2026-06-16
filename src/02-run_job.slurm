@@ -19,6 +19,7 @@ IN_PROCESSED="${SCRATCH}/data/processed"
 OUT="${SCRATCH}/results"
 SETTINGS="${SCRATCH}/settings.ini"
 KALEIDOSCOPE="${PROJECT}/kaleidoscope/kaleidoscope-5.6.8.sif"
+LICENSE="${SCRATCH}/.kaleidoscope"
 
 # ----- Setup -----
 # Exit program if kaleidoscope image cannot be found
@@ -44,6 +45,7 @@ echo "Running file conversion..." >&2
 bash src/04-convert_kaleidoscope.sh \
  -k "${KALEIDOSCOPE}" \
  -s "${SETTINGS}" \
+ -l "${LICENSE}"
 echo " Done." >&2
 
 # ----- Run Analysis -----

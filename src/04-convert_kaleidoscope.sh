@@ -6,10 +6,11 @@ set -euo pipefail
 # Flags:
 #  -k : Path to Kaleidoscope.sif file
 #  -s : Path to settings.ini file
-while getopts "k:s:" flag; do
+while getopts "k:s:l:" flag; do
   case $flag in
     k) KALEIDOSCOPE="$OPTARG" ;;
     s) SETTINGS="$OPTARG" ;;
+    l) LICENSE="$OPTARG" ;;
     \?) echo "ERROR: Invalid option: -$OPTARG, exiting..." >&2; exit 1 ;;
   esac
 done
@@ -21,7 +22,7 @@ module load gcc/9.4.0 apptainer/1.3.1
 # ----- Run Kaleidoscope File Conversion -----
 apptainer \
  exec \
- --bind /scratch/st-mgmitche-1/$USER/.kaleidoscope:/home/$USER/.kaleidoscope \
+ --bind "${LICENSE}":/home/$USER/.kaleidoscope \
  "${KALEIDOSCOPE}" \
  kaleidoscope-cli \
  --accept-license \
