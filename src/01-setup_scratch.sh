@@ -84,7 +84,7 @@ if [[ ! -d "${SCRATCH}/slurm" ]]; then
  mkdir "${SCRATCH}/slurm"
  echo "  Done." >&2
 else
- echo " Processed data directory already exists." >&2
+ echo " Slurm log directory already exists." >&2
 fi
 
 # ----- Sync Source Files -----
