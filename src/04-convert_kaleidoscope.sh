@@ -20,7 +20,9 @@ module load gcc/9.4.0 apptainer/1.3.1
 
 # ----- Run Kaleidoscope File Conversion -----
 apptainer \
- exec "${KALEIDOSCOPE}" \
+ exec \
+ --bind /scratch/st-mgmitche-1/$USER/.kaleidoscope:/home/$USER/.kaleidoscope \
+ "${KALEIDOSCOPE}" \
  kaleidoscope-cli \
  --accept-license \
  --batch "${SETTINGS}"

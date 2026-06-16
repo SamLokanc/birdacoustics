@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --time=0:30:00
+#SBATCH --time=1:00:00
 #SBATCH --account=st-mgmitche-1
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=6
-#SBATCH --mem=10G
+#SBATCH --cpus-per-task=10
+#SBATCH --mem=20G
 #SBATCH --job-name=birdacoustics
 #SBATCH -e slurm/%j.err
 #SBATCH -o slurm/%j.out
@@ -40,16 +40,16 @@ bash src/03-initialize_kaleidoscope.sh \
 echo "  Done." >&2
 
 # ----- Run File Conversion -----
-echo "Running file conversion..." >&2
-bash src/04-convert_kaleidoscope.sh \
- -k "${KALEIDOSCOPE}" \
- -s "${SETTINGS}" \
-echo " Done." >&2
+#echo "Running file conversion..." >&2
+#bash src/04-convert_kaleidoscope.sh \
+# -k "${KALEIDOSCOPE}" \
+# -s "${SETTINGS}" \
+#echo " Done." >&2
 
 # ----- Run Analysis -----
 #echo "Running HawkEars analysis..." >&2
 #bash src/05-analyze_hawkears.sh \
-# -i "${IN}" \
+# -i "${IN_PROCESSED}" \
 # -o "${OUT}" \
 # -d 20260516 \
 # -t "${SLURM_CPUS_PER_TASK}"
