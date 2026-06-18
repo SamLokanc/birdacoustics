@@ -53,25 +53,23 @@ flowchart TD
 ## Prerequisites / Setup
 This data pipeline is intended to be run on an ARC computing cluster environment that uses the SLURM workload manager. More specifically, it is intended to run on the University of British Columbia's [Sockeye computing cluster](https://arc.ubc.ca/compute-storage/ubc-arc-sockeye). Clone this repository by navigating to your home directory on the computing cluster and entering one of the following commands:
 
+### Cloning the Repo
 If you have an ssh key set up on the cluster (**recommended for security** [see this guide here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)),
 
 ```bash
-cd ~
-git clone git@github.com:SamLokanc/birdacoustics.git
+cd ~ && git clone git@github.com:SamLokanc/birdacoustics.git && cd birdacoustics
 ```
 
 Otherwise you can run:
 
 ```bash
-cd ~
-git clone https://github.com/SamLokanc/birdacoustics.git
+cd ~ && git clone https://github.com/SamLokanc/birdacoustics.git && cd birdacoustics
 ```
 
-Once the repo is cloned, navigate to the directory containing it using the following command:
+### Kaleidoscope License
+An active Kaleidoscope license exists on sockeye for the `se007` node. Kaleidoscope limits the amount of active licenses by device, meaning that the license can only be activated on one compute node. This can significantly impact the amount of time required by the SLURM workload manager to allocate reseources to run a job.
 
-```bash
-cd birdacoustics
-```
+If the the job fails because of an inactive kaleidoscope license you will have to manually reactivate it.
 
 ## Usage
 To run the analysis simply enter the following command from within the cloned repo:
@@ -80,7 +78,7 @@ To run the analysis simply enter the following command from within the cloned re
 ./src/00-submit.sh
 ```
 
-Then for the submitted job to finish.
+Then wait for the submitted job to finish.
 
 ## References
 Huus, J., Kelly, K. G., Bayne, E. M., & Knight, E. C. (2025). HawkEars: A regional, high-performance avian acoustic classifier. Ecological Informatics, 87, 103122.
