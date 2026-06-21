@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --time=5:00:00
+#SBATCH --time=1:00:00
 #SBATCH --account=st-mgmitche-1
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=60G
+#SBATCH --mem=20G
 #SBATCH --job-name=birdacoustics_kaleidoscope
 #SBATCH --nodelist=se007
 #SBATCH --partition=skylake
