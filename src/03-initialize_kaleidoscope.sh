@@ -47,4 +47,7 @@ noise=0
 enable1=1
 compress=0
 split=0
+
+[output/gps]
+format=1
 EOF
