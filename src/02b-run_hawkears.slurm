@@ -17,6 +17,5 @@ echo "Running HawkEars analysis..." >&2
 bash src/05-analyze_hawkears.sh \
  -i "${IN_PROCESSED}" \
  -o "${OUT}" \
- -d "file" \
  -t "${SLURM_CPUS_PER_TASK}"
 echo "  Done." >&2
