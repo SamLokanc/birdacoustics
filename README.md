@@ -10,12 +10,14 @@ This project aims to leverage the use of acoustic data in the monitoring of bird
 Below is a table containing all the scripts (within in the `src/` directory) and their corresponding utility in the pipeline.
 | Script | Description |
 | --- | --- |
-| `00-submit.sh` | Calls `setup_scratch.sh` then runs `run_job.slurm` as a slurm job. |
-| `01-setup_scratch.sh` | Either creates or finds an existing scratch directory of the format `.../<user>/<user>_birdacoustics_<YYYYMMDD>`. |
-| `02-run_job.slurm` | Contains slurm specifications. Calls `03-initialize_kaleidoscope.sh`, `04-convert_kaleidoscope.sh`, `05-analyze_hawkears.sh`. |
+| `00-submit.sh` | Calls `setup_scratch.sh` then runs `run_job.slurm` as a slurm job |
+| `01-setup_scratch.sh` | Either creates or finds an existing scratch directory of the format `.../<user>/<user>_birdacoustics_<YYYYMMDD>` |
+| `02a-run_kaleidoscope.slurm` | Executes the kaleidoscope relevant scripts |
+| `02b-run_hawkears.slurm` | Executes the Hawkears relevant scripts |
 | `03-initialize_kaleidoscope.sh` | Creates the `settings.ini` file required for Kaleidoscope to run the batch conversion. |
 | `04-convert_kaleidoscope.sh`| Uses the `Kaleidoscope` apptainer to batch convert input files (.w4v) to a consistent (.wav) format |
 | `05-analyze_hawkears.sh` | Loads `HawkEars` as a module and then runs an analysis. |
+| `06-process_outputs` | Does final processing of the Kaleidoscope/Hawkears outputs. Extracts datetimes, attaches gps coordinates, saves .csv file |
 
 ```mermaid
 flowchart TD
@@ -25,8 +27,7 @@ flowchart TD
     <span style='font-size: 11px;'>Creates/finds scratch dir </br> .../&ltuser&gt\_birdacoustics\_&ltYYYYMMDD&gt/ </span>`")
     C{{"`**Scratch Directory**
     <span style='font-size: 11px;'> Reused if already exists </span>`"}}
-    D("`**02-run_job.slurm.sh**
-    <span style='font-size: 11px;'> Slurm job specifications </span>`")
+    D("`**02a-run_kaleidoscope.slurm.sh**`")
     E("`**05-analyze_hawkears.sh**
     <span style='font-size: 11px;'> Loads HawkEars Module </br> Runs acoustic analysis</span>`")
     F("`**04-convert_kaleidoscope.sh**
@@ -35,19 +36,30 @@ flowchart TD
     H("`**03-initialize_kaleidoscope.sh**
     <span style='font-size: 11px;'> creates the settings.ini file required for file conversion</span>`")
     I{{"`**settings.ini**`"}}
+    J("`**02b-run_hawkears.slurm.sh**`")
+    K("`**06-process_outputs.py**`")
+    L{{"`**GPS coordinates**`"}}
+    M{{"`**Species Predictions**`"}}
+    N{{"`**Output CSV**`"}}
 
-
-    A --> B 
+    A --> B
     A --> D
+    A --> J
     B -.-> C
     C -.-> D
-    D --> E
-    D --> F
     D --> H
-    H --> I
+    H -.-> I
     I -.-> F
+    D --> F
     F -.-> G
-    G -.-> E
+    F -.-> L
+    G -.-> J
+    J --> E
+    E -.-> M
+    E --> K
+    L -.-> K
+    M -.-> K
+    K -.-> N
 ```
 
 ## Prerequisites / Setup
