@@ -45,7 +45,6 @@ flowchart TD
     A --> B
     A --> D
     A --> J
-    A --> K
     B -.-> C
     C -.-> D
     D --> H
@@ -57,6 +56,7 @@ flowchart TD
     G -.-> J
     J --> E
     E -.-> M
+    E --> K
     L -.-> K
     M -.-> K
     K -.-> N
