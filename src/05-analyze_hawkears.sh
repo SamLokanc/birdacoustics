@@ -32,3 +32,17 @@ analyze.py \
  --lon -123.236 \
  --threads "${THREADS}" \
  --rtype csv
+
+# ----- Load miniconda3 Module -----
+module load gcc miniconda3
+
+# ----- Create and Activate Environment -----
+conda env create -f environment.yml
+conda activate birdacoustics
+
+# ----- Call Postprocessing Script -----
+python src/06-process_outputs.py \
+ -l "${OUTPUT}"/HawkEars_labels.csv \
+ -r "${OUTPUT}"/HawkEars_rarities.csv \
+ -g "${INPUT}"/gps.csv \
+ -s results/out.csv
