@@ -41,6 +41,7 @@ flowchart TD
     L{{"`**GPS coordinates**`"}}
     M{{"`**Species Predictions**`"}}
     N{{"`**Output CSV**`"}}
+    O{{"`**Rare Species Predictions**`"}}
 
     A --> B
     A --> D
@@ -56,9 +57,11 @@ flowchart TD
     G -.-> J
     J --> E
     E -.-> M
+    E -.-> O
     E --> K
     L -.-> K
     M -.-> K
+    O -.-> K
     K -.-> N
 ```
 
