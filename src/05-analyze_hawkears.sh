@@ -41,4 +41,4 @@ python src/06-process_outputs.py \
  -l "${OUTPUT}"/HawkEars_labels.csv \
  -r "${OUTPUT}"/HawkEars_rarities.csv \
  -g "${INPUT}"/gps.csv \
- -s results/out.csv
+ -s "${OUTPUT}"/out.csv
