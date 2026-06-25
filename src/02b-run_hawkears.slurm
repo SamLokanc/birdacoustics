@@ -10,7 +10,6 @@
 #SBATCH --job-name=birdacoustics_hawkears
 #SBATCH -e slurm/%j.err
 #SBATCH -o slurm/%j.out
-#SBATCH --mail-user=samuel.lokanc@ubc.ca
 #SBATCH --mail-type=ALL
 
 echo "Running HawkEars analysis..." >&2

@@ -10,7 +10,6 @@
 #SBATCH --partition=skylake
 #SBATCH -e slurm/%j.err
 #SBATCH -o slurm/%j.out
-#SBATCH --mail-user=samuel.lokanc@ubc.ca
 #SBATCH --mail-type=ALL
 
 echo "Writing new Kaleidoscope settings file at ${SETTINGS}..." >&2

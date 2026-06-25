@@ -66,6 +66,7 @@ if [[ "${RUN_KAL}" -eq 1 ]]; then
   --chdir="${SCRATCH}" \
   --export=ALL \
   --parsable \
+  --mail-user "${USER}" \
   "${SCRATCH}/src/02a-run_kaleidoscope.slurm"
  )
  echo "Submitted Kaleidoscope job: ${KAL_JOBID}" >&2
@@ -76,6 +77,7 @@ if [[ "${RUN_HAWK}" -eq 1 ]]; then
   --chdir="${SCRATCH}"
   --export=ALL
   --parsable
+  --mail-user "${USER}"
  )
 
  if [[ -n "${KAL_JOBID}" ]]; then

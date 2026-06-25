@@ -8,9 +8,10 @@ set -euo pipefail
 #       regardless of whether or not one from an earlier
 #       date exists.
 FORCE=0
-while getopts "f" flag; do
+while getopts "fp:" flag; do
  case $flag in
   f) FORCE=1 ;;
+  p) PROJECT_NAME="$OPTARG" ;;
   \?) echo "ERROR: Invalid option, exiting..." >&2; exit 1;;
  esac
 done
@@ -23,14 +24,14 @@ shift $(( OPTIND-1 ))
 # matching pattern already exists select the most recent one based on
 # date in the file name.
 echo "Checking if Scratch directory exists..." >&2
-if ( ! compgen -G "${SCRATCH_BASE}/${USER}/${USER}_birdacoustics_*" > /dev/null ) || (( FORCE )); then
- SCRATCH="${SCRATCH_BASE}/${USER}/${USER}_birdacoustics_$(date +%Y%m%d)"
+if ( ! compgen -G "${SCRATCH_BASE}/${USER}/${USER}_${PROJECT_NAME}_*" > /dev/null ) || (( FORCE )); then
+ SCRATCH="${SCRATCH_BASE}/${USER}/${USER}_${PROJECT_NAME}_$(date +%Y%m%d)"
  echo " Creating ${SCRATCH} ..." >&2
  mkdir "${SCRATCH}"
  echo "  Done." >&2
 else
  SCRATCH=$(
-  compgen -G "${SCRATCH_BASE}/${USER}/${USER}_birdacoustics_*" |
+  compgen -G "${SCRATCH_BASE}/${USER}/${USER}_${PROJECT_NAME}_*" |
   sort -t_ -k3 -r |
   head -n 1)
  echo " ${SCRATCH} already exists." >&2
