@@ -6,7 +6,6 @@ set -euo pipefail
 # Flags:
 #  -o : output. Takes path to output directory as an argument.
 #  -i : input. Takes path to input directory as an argument.
-#  -d : date. Takes date of recording as argument.
 #  -t : number of threads. Takes ${SLURM_CPUS_PER_TASK} as argument.
 while getopts "o:i:t:" flag; do
   case $flag in
@@ -33,12 +32,9 @@ analyze.py \
  --threads "${THREADS}" \
  --rtype csv
 
-# ----- Load miniconda3 Module -----
-module load gcc miniconda3
-
-# ----- Create and Activate Environment -----
-conda env create -f environment.yml
-conda activate birdacoustics
+# ----- Activate Python Environment -----
+module load gcc python
+source "${PROJECT}/acoustic_env/bin/activate"
 
 # ----- Call Postprocessing Script -----
 python src/06-process_outputs.py \
