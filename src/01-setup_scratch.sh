@@ -91,7 +91,6 @@ fi
 # Move all script files to the scratch directory since batch
 # jobs need to be submitted from there.
 rsync -a "${HOME}/birdacoustics/src" "${SCRATCH}/" >&2
-rsync -a "${HOME}/birdacoustics/environment.yml" "${SCRATCH}/" >&2
 
 # ----- Send SCRATCH to stdout -----
 echo "${SCRATCH}"
