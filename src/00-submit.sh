@@ -12,11 +12,12 @@ set -euo pipefail
 FORCE=0
 RUN_KAL=0
 RUN_HAWK=0
-while getopts "fkw" flag; do
+while getopts "fkwt:" flag; do
  case $flag in
   f) FORCE=1 ;;
   k) RUN_KAL=1 ;;
   w) RUN_HAWK=1 ;;
+  t) THRESHOLD="$OPTARG" ;;
   \?) echo "ERROR: Invalid option, exiting..." >&2; exit 1;;
  esac
 done
@@ -41,6 +42,9 @@ export OUT="${SCRATCH}/results"
 export SETTINGS="${SCRATCH}/settings.ini"
 export KALEIDOSCOPE="${PROJECT}/kaleidoscope/kaleidoscope-5.6.8.sif"
 export LICENSE="${SCRATCH}/.kaleidoscope"
+
+# ----- Set Config Variables -----
+export THRESHOLD
 
 # ----- Directory Existance Sanity Check -----
 # Check SCRATCH is defined. If it does not exit the program.
