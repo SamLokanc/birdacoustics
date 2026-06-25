@@ -7,10 +7,16 @@ set -euo pipefail
 #  -f : Force the creation of the scratch directory. Since
 #       everything exists in the scratch directory this will
 #       essentially force a new project instance to be created.
+#  -k : Run kaleidoscope job.
+#  -w : Run Hawkears job.
 FORCE=0
-while getopts "f" flag; do
+RUN_KAL=0
+RUN_HAWK=0
+while getopts "fkw" flag; do
  case $flag in
   f) FORCE=1 ;;
+  k) RUN_KAL=1 ;;
+  w) RUN_HAWK=1 ;;
   \?) echo "ERROR: Invalid option, exiting..." >&2; exit 1;;
  esac
 done
@@ -49,24 +55,41 @@ if [ ! -d "${PROJECT}" ]; then
 fi
 
 # ----- Submit Slurm Jobs -----
-# This submits the slurm job from the scratch directory. This
-# is necessary on UBC sockeye because you cannot submit slurm
-# jobs from the home directory.
+# Based on the arguments provided will run either the
+# kaleidoscope batch file conversion, Hawkears acoustic
+# analysis, or both. When both are specified the Hawkears
+# job is dependent on the kaleidoscope job finishing first.
+KAL_JOBID=""
 
-KAL_JOBID=$(sbatch \
- --chdir="${SCRATCH}" \
- --export=ALL \
- --parsable \
- "${SCRATCH}/src/02a-run_kaleidoscope.slurm"
-)
-echo "Submitted Kaleidoscope job: ${KAL_JOBID}" >&2
+if [[ "${RUN_KAL}" -eq 1 ]]; then
+ KAL_JOBID=$(sbatch \
+  --chdir="${SCRATCH}" \
+  --export=ALL \
+  --parsable \
+  "${SCRATCH}/src/02a-run_kaleidoscope.slurm"
+ )
+ echo "Submitted Kaleidoscope job: ${KAL_JOBID}" >&2
+fi
 
-HAWK_JOBID=$(sbatch \
- --chdir="${SCRATCH}" \
- --export=ALL \
- --dependency=afterok:${KAL_JOBID} \
- --parsable \
- "${SCRATCH}/src/02b-run_hawkears.slurm"
-)
-echo "Submitted Hawkears job: ${HAWK_JOBID} (waiting on ${KAL_JOBID})" >&2
+if [[ "${RUN_HAWK}" -eq 1 ]]; then
+ HAWK_SBATCH_ARGS=(
+  --chdir="${SCRATCH}"
+  --export=ALL
+  --parsable
+ )
 
+ if [[ -n "${KAL_JOBID}" ]]; then
+  HAWK_SBATCH_ARGS+=(--dependency=afterok:${KAL_JOBID})
+ fi
+
+ HAWK_JOBID=$(sbatch \
+  "${HAWK_SBATCH_ARGS[@]}" \
+  "${SCRATCH}/src/02b-run_hawkears.slurm"
+ )
+
+ if [[ -n "${KAL_JOBID}" ]]; then
+  echo "Submitted Hawkears job: ${HAWK_JOBID} (waiting on ${KAL_JOBID})" >&2
+ else
+  echo "Submitted Hawkears job: ${HAWK_JOBID" >&2
+ fi
+fi
