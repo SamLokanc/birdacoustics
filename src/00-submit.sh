@@ -12,12 +12,14 @@ set -euo pipefail
 FORCE=0
 RUN_KAL=0
 RUN_HAWK=0
+EMAIL=""
 while getopts "fkwt:" flag; do
  case $flag in
   f) FORCE=1 ;;
   k) RUN_KAL=1 ;;
   w) RUN_HAWK=1 ;;
   t) THRESHOLD="$OPTARG" ;;
+  e) EMAIL="$OPTARG" ;;
   \?) echo "ERROR: Invalid option, exiting..." >&2; exit 1;;
  esac
 done
@@ -70,7 +72,7 @@ if [[ "${RUN_KAL}" -eq 1 ]]; then
   --chdir="${SCRATCH}" \
   --export=ALL \
   --parsable \
-  --mail-user "${USER}" \
+  ${EMAIL:+--mail-user "${EMAIL}"} \
   "${SCRATCH}/src/02a-run_kaleidoscope.slurm"
  )
  echo "Submitted Kaleidoscope job: ${KAL_JOBID}" >&2
@@ -81,7 +83,7 @@ if [[ "${RUN_HAWK}" -eq 1 ]]; then
   --chdir="${SCRATCH}"
   --export=ALL
   --parsable
-  --mail-user "${USER}"
+  ${EMAIL:+--mail-user "${EMAIL}"}
  )
 
  if [[ -n "${KAL_JOBID}" ]]; then
