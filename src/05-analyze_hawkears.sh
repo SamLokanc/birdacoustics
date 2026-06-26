@@ -35,7 +35,7 @@ analyze.py \
 
 # ----- Activate Python Environment -----
 module load gcc python
-source "${PROJECT}/acoustic_env/bin/activate"
+source "${PROJECT}/acoustics_env/bin/activate"
 
 # ----- Call Postprocessing Script -----
 python src/06-process_outputs.py \

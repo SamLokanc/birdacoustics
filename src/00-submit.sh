@@ -33,7 +33,7 @@ fi
 unset SCRATCH_BASE
 
 # ----- Set Project Directory -----
-export PROJECT="/arc/project/st-mgmitche-1/"
+export PROJECT="/arc/project/st-mgmitche-1"
 
 # ----- Set Path Variables -----
 export IN_RAW="${SCRATCH}/data/raw"
