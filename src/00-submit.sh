@@ -13,7 +13,7 @@ FORCE=0
 RUN_KAL=0
 RUN_HAWK=0
 EMAIL=""
-while getopts "fkwt:" flag; do
+while getopts "fkwt:e:" flag; do
  case $flag in
   f) FORCE=1 ;;
   k) RUN_KAL=1 ;;
