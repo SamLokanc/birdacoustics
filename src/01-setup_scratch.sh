@@ -8,6 +8,7 @@ set -euo pipefail
 #       regardless of whether or not one from an earlier
 #       date exists.
 FORCE=0
+PROJECT_NAME="birdacoustics"
 while getopts "fp:" flag; do
  case $flag in
   f) FORCE=1 ;;

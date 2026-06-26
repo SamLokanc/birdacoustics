@@ -96,6 +96,6 @@ if [[ "${RUN_HAWK}" -eq 1 ]]; then
  if [[ -n "${KAL_JOBID}" ]]; then
   echo "Submitted Hawkears job: ${HAWK_JOBID} (waiting on ${KAL_JOBID})" >&2
  else
-  echo "Submitted Hawkears job: ${HAWK_JOBID" >&2
+  echo "Submitted Hawkears job: ${HAWK_JOBID}" >&2
  fi
 fi
