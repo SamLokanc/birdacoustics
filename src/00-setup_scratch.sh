@@ -99,6 +99,8 @@ fi
 # jobs need to be submitted from there.
 rsync -a "${HOME}/birdacoustics/src" "${SCRATCH}/" >&2
 
-# ----- Send SCRATCH to stdout -----
-echo "${SCRATCH}"
-
+# ----- Print Path to Import Data to -----
+echo $'\nBefore submitting the job you should:'
+echo "- Import .w4v files to ${SCRATCH}/data/raw"
+echo " OR"
+echo "- Import .wav files to ${SCRATCH}/data/processed"
