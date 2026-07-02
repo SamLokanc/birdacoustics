@@ -7,6 +7,8 @@ set -euo pipefail
 #  -f : if set the script will setup the scratch directory
 #       regardless of whether or not one from an earlier
 #       date exists.
+#  -p : project name used in the scratch directory naming
+#       convention (default: birdacoustics).
 FORCE=0
 PROJECT_NAME="birdacoustics"
 while getopts "fp:" flag; do
@@ -17,6 +19,9 @@ while getopts "fp:" flag; do
  esac
 done
 shift $(( OPTIND-1 ))
+
+# ----- Set Scratch Base Directory -----
+export SCRATCH_BASE="/scratch/st-mgmitche-1"
 
 # ----- Scratch Directory Creation -----
 # Check if no directory matching the pattern exists OR if the
