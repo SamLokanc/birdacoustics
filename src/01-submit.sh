@@ -108,4 +108,5 @@ if [[ "${RUN_HAWK}" -eq 1 ]]; then
  else
   echo "Submitted Hawkears job: ${HAWK_JOBID}" >&2
  fi
+echo "Results will be available at ${OUT}"
 fi
