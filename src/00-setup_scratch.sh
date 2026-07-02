@@ -29,10 +29,19 @@ export SCRATCH_BASE="/scratch/st-mgmitche-1"
 # convention: in scratch/user/user_project_YYYYMMDD. If directory(ies)
 # matching pattern already exists select the most recent one based on
 # date in the file name.
+echo "Checking if User directory exists..." >&2
+if ( ! compgen -G "${SCRATCH_BASE}/${USER}" >&2 /dev/null ); then
+ echo " Creating ${SCRATCH_BASE}/${USER}..." >&2
+ mkdir "${SCRATCH_BASE}/${USER}"
+ echo " Done." >&2
+else
+ echo " User directory already exists." >&2
+fi
+
 echo "Checking if Scratch directory exists..." >&2
 if ( ! compgen -G "${SCRATCH_BASE}/${USER}/${USER}_${PROJECT_NAME}_*" > /dev/null ) || (( FORCE )); then
  SCRATCH="${SCRATCH_BASE}/${USER}/${USER}_${PROJECT_NAME}_$(date +%Y%m%d)"
- echo " Creating ${SCRATCH} ..." >&2
+ echo " Creating ${SCRATCH}..." >&2
  mkdir "${SCRATCH}"
  echo "  Done." >&2
 else
