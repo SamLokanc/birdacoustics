@@ -43,3 +43,6 @@ python src/06-process_outputs.py \
  -r "${OUTPUT}"/HawkEars_rarities.csv \
  -g "${INPUT}"/gps.csv \
  -s "${OUTPUT}"/out.csv
+
+# ----- Clean Processed Data Directory -----
+rm -rf "${SCRATCH}/data/processed/*"
