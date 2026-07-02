@@ -54,6 +54,8 @@ Note that the project name is only used for naming the scratch directory. This s
 ### Importing Data
 Once the scratch directory is set up you can import acoustic data using your desired method. Note that the pipeline was designed to work on either `.w4v` or `.wav` files. If your acoustic files are in the `.w4v` format, import them to the `data/raw` subdirectory within the scratch directory, then run the analysis using both the Kaleidoscope and HawkEars options in the next step. If your acoustic files are in the `.wav` format, import them to the `data/processed` subdirectory within the scratch direrctory, then run the analysis using only the HawkEars option in the next step.
 
+Note that in order for the analysis pipeline to succeed the names of these files need to contain an 8 digit number representing the date (in YYYYMMDD format) and a 6 digit number representing the start time (in HHMMSS format). This information is pulled directly from the file name and used by HawkEars for classification.
+
 ### Submitting Jobs
 To submit the Kaleidoscope and/or HawkEars Jobs required to run this analysis simply run the following command:
 
