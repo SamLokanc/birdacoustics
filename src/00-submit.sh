@@ -4,20 +4,22 @@ set -euo pipefail
 
 # ----- Parse Flags -----
 # Flags:
-#  -f : Force the creation of the scratch directory. Since
-#       everything exists in the scratch directory this will
-#       essentially force a new project instance to be created.
 #  -k : Run kaleidoscope job.
 #  -w : Run Hawkears job.
-FORCE=0
+#  -p : Project name used to locate the scratch directory
+#       (default: birdacoustics). Must match what was used
+#       with 01-setup_scratch.sh.
+#  -t : Threshold config value.
+#  -e : Email address for Slurm job notifications.
 RUN_KAL=0
 RUN_HAWK=0
+PROJECT_NAME="birdacoustics"
 EMAIL=""
-while getopts "fkwt:e:" flag; do
+while getopts "kwp:t:e:" flag; do
  case $flag in
-  f) FORCE=1 ;;
   k) RUN_KAL=1 ;;
   w) RUN_HAWK=1 ;;
+  p) PROJECT_NAME="$OPTARG" ;;
   t) THRESHOLD="$OPTARG" ;;
   e) EMAIL="$OPTARG" ;;
   \?) echo "ERROR: Invalid option, exiting..." >&2; exit 1;;
@@ -25,14 +27,21 @@ while getopts "fkwt:e:" flag; do
 done
 shift $(( OPTIND-1 ))
 
-# ----- Set Scratch Directory -----
-export SCRATCH_BASE="/scratch/st-mgmitche-1" #move alloc name to .env?
-if [ "${FORCE}" -eq 1 ]; then
- export SCRATCH=$(bash src/01-setup_scratch.sh -f)
-else
- export SCRATCH=$(bash src/01-setup_scratch.sh)
+# ----- Locate Scratch Directory -----
+# This script expects setup_scratch.sh to have already been run.
+# It picks the most recent matching directory, same convention
+# used by the setup script.
+
+SRATCH_BASE="/scratch/st-mgmitche-1"
+if ! compgen -G "${SCRATCH_BASE}/${USER}/${USER}_${PROJECT_NAME}_*" > /dev/null; then
+ echo "ERROR: No scratch directory found for project '${PROJECT_NAME}'." >&2
+ echo " Run src/01-setup_scratch.sh first." >&2
+ exit 1
 fi
-unset SCRATCH_BASE
+export SCRATCH=$(
+ compgen -G "${SCRATCH_BASE}/${USER}/${USER}_${PROJECT_NAME}_*" |
+ sort -t_ -k3 -r |
+ head -n 1)
 
 # ----- Set Project Directory -----
 export PROJECT="/arc/project/st-mgmitche-1"
