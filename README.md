@@ -3,67 +3,21 @@
 
 Birds serve as great bioindicators since they occupy a wide range of habitats and their populations respond quickly to environmental change (Kułaga, 2019). It is therefore advantageous to monitor bird populations since they allow for the quick detection of environmental stresses over the entire ecosystem. Detecting these changes is imperitive to measure the impacts of our own development on ecosystems as well as evaluate any measures being taken to remedy our harms. 
 
-This project aims to leverage the use of acoustic data in the monitoring of bird populations, particularly through the use of HawkEars, a machine learning-based approach for acoustic classification of avian species (Huus, 2025). Affiliated with the University of British Columbia, the data for this project comes from acoustic recorders placed in the greater Vancouver area. The scripts contained in this project act as an end-to-end pipeline to process raw acoustic recordings, generate insights, and display valuable information in a digestible format, the ultimate goal of which is to contribute to sustainable development and preserving ecosystem health.
+This project aims to leverage the use of acoustic data in the monitoring of bird populations, particularly through the use of HawkEars, a machine learning-based approach for acoustic classification of avian species (Huus, 2025). Affiliated with the University of British Columbia, the data for this project comes from acoustic recorders placed in the greater Vancouver area. The scripts contained herein act as an end-to-end pipeline to process raw acoustic recordings, generate insights, and display valuable information in a digestible format, the ultimate goal of which is to contribute to sustainable development and preserving ecosystem health.
 
 ## Workflow
 
 Below is a table containing all the scripts (within in the `src/` directory) and their corresponding utility in the pipeline.
 | Script | Description |
 | --- | --- |
-| `00-submit.sh` | Calls `setup_scratch.sh` then runs `run_job.slurm` as a slurm job |
-| `01-setup_scratch.sh` | Either creates or finds an existing scratch directory of the format `.../<user>/<user>_birdacoustics_<YYYYMMDD>` |
+| `00-setup_scratch.sh` | Either creates or finds an existing scratch directory of the format `.../<user>/<user>_birdacoustics_<YYYYMMDD>` |
+| `01-submit.sh` | Point of entry for job submission. Submits Hawkears and/or Kaleidoscope jobs to the cluster. |
 | `02a-run_kaleidoscope.slurm` | Executes the kaleidoscope relevant scripts |
 | `02b-run_hawkears.slurm` | Executes the Hawkears relevant scripts |
 | `03-initialize_kaleidoscope.sh` | Creates the `settings.ini` file required for Kaleidoscope to run the batch conversion. |
 | `04-convert_kaleidoscope.sh`| Uses the `Kaleidoscope` apptainer to batch convert input files (.w4v) to a consistent (.wav) format |
 | `05-analyze_hawkears.sh` | Loads `HawkEars` as a module and then runs an analysis. |
 | `06-process_outputs` | Does final processing of the Kaleidoscope/Hawkears outputs. Extracts datetimes, attaches gps coordinates, saves .csv file |
-
-```mermaid
-flowchart TD
-    A("`**00-submit.sh**
-    <span style='font-size: 11px;'>Entry point</span>`")
-    B("`**01-setup_scratch.sh**
-    <span style='font-size: 11px;'>Creates/finds scratch dir </br> .../&ltuser&gt\_birdacoustics\_&ltYYYYMMDD&gt/ </span>`")
-    C{{"`**Scratch Directory**
-    <span style='font-size: 11px;'> Reused if already exists </span>`"}}
-    D("`**02a-run_kaleidoscope.slurm.sh**`")
-    E("`**05-analyze_hawkears.sh**
-    <span style='font-size: 11px;'> Loads HawkEars Module </br> Runs acoustic analysis</span>`")
-    F("`**04-convert_kaleidoscope.sh**
-    <span style='font-size: 11px;'> Converts all audio files to consistent (.wav) format</span>`")
-    G{{"`**.wav files**`"}}
-    H("`**03-initialize_kaleidoscope.sh**
-    <span style='font-size: 11px;'> creates the settings.ini file required for file conversion</span>`")
-    I{{"`**settings.ini**`"}}
-    J("`**02b-run_hawkears.slurm.sh**`")
-    K("`**06-process_outputs.py**`")
-    L{{"`**GPS coordinates**`"}}
-    M{{"`**Species Predictions**`"}}
-    N{{"`**Output CSV**`"}}
-    O{{"`**Rare Species Predictions**`"}}
-
-    A --> B
-    A --> D
-    A --> J
-    B -.-> C
-    C -.-> D
-    D --> H
-    H -.-> I
-    I -.-> F
-    D --> F
-    F -.-> G
-    F -.-> L
-    G -.-> J
-    J --> E
-    E -.-> M
-    E -.-> O
-    E --> K
-    L -.-> K
-    M -.-> K
-    O -.-> K
-    K -.-> N
-```
 
 ## Prerequisites / Setup
 This data pipeline is intended to be run on an ARC computing cluster environment that uses the SLURM workload manager. More specifically, it is intended to run on the University of British Columbia's [Sockeye computing cluster](https://arc.ubc.ca/compute-storage/ubc-arc-sockeye). Clone this repository by navigating to your home directory on the computing cluster and entering one of the following commands:
@@ -87,11 +41,27 @@ An active Kaleidoscope license exists on sockeye for the `se007` node. Kaleidosc
 If the the job fails because of an inactive kaleidoscope license you will have to manually reactivate it.
 
 ## Usage
-To run the analysis simply enter the following command from within the cloned repo:
+
+### Scratch Directory Set-up
+Due to memory and job submission constraints on Sockeye cluster, the pipeline requires a scratch directory for data to be stored in and jobs to be submitted from. In order to set up the scratch directory run the following command from within the cloned repo:
 
 ```bash
-./src/00-submit.sh
+./src/00-setup_scratch.sh -p <project name>
 ```
+
+Note that the project name is only used for naming the scratch directory. This should be descriptive to allow for easier file navigation.
+
+### Importing Data
+Once the scratch directory is set up you can import acoustic data using your desired method. Note that the pipeline was designed to work on either `.w4v` or `.wav` files. If your acoustic files are in the `.w4v` format, import them to the `data/raw` subdirectory within the scratch directory, then run the analysis using both the Kaleidoscope and HawkEars options in the next step. If your acoustic files are in the `.wav` format, import them to the `data/processed` subdirectory within the scratch direrctory, then run the analysis using only the HawkEars option in the next step.
+
+### Submitting Jobs
+To submit the Kaleidoscope and/or HawkEars Jobs required to run this analysis simply run the following command:
+
+```bash
+./src/01-submit.sh -p <project name> -k -w -t <threshold cutoff value> -e <email address>
+```
+
+Note that the `-k` and `-w` arguments specify whether to run the Kaleidoscope and HawkEars portions onf the analysis pipeline respectively. The project name supplied to the. `-p` argument needs to be consistent with the one provided in the scratch directory setup step. `-t` specifies the confidence trheshold cutoff value that HawkEars will use for preliminary results filtering (the default value is 0.8). Finally, an email address can be supplied via the `-e` argument; this email will be used to provide updates on the status of the slurm job (when it is submitted, if it fails, and when it completes)
 
 Then wait for the submitted job to finish.
 
