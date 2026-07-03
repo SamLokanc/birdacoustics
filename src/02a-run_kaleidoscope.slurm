@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=20G
 #SBATCH --job-name=birdacoustics_kaleidoscope
-#SBATCH --nodelist=se007
+#SBATCH --nodelist=se060
 #SBATCH --partition=skylake
 #SBATCH -e slurm/%j.err
 #SBATCH -o slurm/%j.out
