@@ -51,7 +51,7 @@ export IN_PROCESSED="${SCRATCH}/data/processed"
 export OUT="${SCRATCH}/results"
 export SETTINGS="${SCRATCH}/settings.ini"
 export KALEIDOSCOPE="${PROJECT}/kaleidoscope/kaleidoscope-5.6.8.sif"
-export LICENSE="${PROJECT}/.kaleidoscope"
+export LICENSE="${SCRATCH_BASE}/.kaleidoscope"
 
 # ----- Set Config Variables -----
 export THRESHOLD
