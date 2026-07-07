@@ -10,7 +10,7 @@ This project aims to leverage the use of acoustic data in the monitoring of bird
 Below is a table containing all the scripts (within in the `src/` directory) and their corresponding utility in the pipeline.
 | Script | Description |
 | --- | --- |
-| `00-setup_scratch.sh` | Either creates or finds an existing scratch directory of the format `.../<user>/<user>_birdacoustics_<YYYYMMDD>` |
+| `00-setup_scratch.sh` | Either creates or finds an existing scratch directory of the format `.../<user>/<user>_<project_name>_<YYYYMMDD>` |
 | `01-submit.sh` | Point of entry for job submission. Submits Hawkears and/or Kaleidoscope jobs to the cluster. |
 | `02a-run_kaleidoscope.slurm` | Executes the kaleidoscope relevant scripts |
 | `02b-run_hawkears.slurm` | Executes the Hawkears relevant scripts |
