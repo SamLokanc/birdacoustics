@@ -17,7 +17,7 @@ Below is a table containing all the scripts (within in the `src/` directory) and
 | `03-initialize_kaleidoscope.sh` | Creates the `settings.ini` file required for Kaleidoscope to run the batch conversion. |
 | `04-convert_kaleidoscope.sh`| Uses the `Kaleidoscope` apptainer to batch convert input files (.w4v) to a consistent (.wav) format |
 | `05-analyze_hawkears.sh` | Loads `HawkEars` as a module and then runs an analysis. |
-| `06-process_outputs` | Does final processing of the Kaleidoscope/Hawkears outputs. Extracts datetimes, attaches gps coordinates, saves .csv file |
+| `06-process_outputs.py` | Does final processing of the Kaleidoscope/Hawkears outputs. Extracts datetimes, attaches gps coordinates, saves .csv file |
 
 ## Prerequisites / Setup
 This data pipeline is intended to be run on an ARC computing cluster environment that uses the SLURM workload manager. More specifically, it is intended to run on the University of British Columbia's [Sockeye computing cluster](https://arc.ubc.ca/compute-storage/ubc-arc-sockeye). Clone this repository by navigating to your home directory on the computing cluster and entering one of the following commands:
