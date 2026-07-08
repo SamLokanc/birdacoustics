@@ -69,9 +69,10 @@ all_labels_gps = pd.merge(
 # Using regular expressions to extract the date and time of recording,
 # converts to a string that will be easily readable by R's lubridate
 # package.
-extracted = all_labels_gps['filename'].str.extract(r'(\d{8})_(\d{6})_(\d{3})')
-extracted.columns = ['date_str', 'time_str', 'seq']
+extracted = all_labels_gps['filename'].str.extract(r'^(.*?)_(\d{8})_(\d{6})_(\d{3})')
+extracted.columns = ['recorder_id', 'date_str', 'time_str', 'seq']
 
+all_labels_gps['recorder_id'] = extracted['recorder_id']
 all_labels_gps['timestamp'] = pd.to_datetime(
     extracted['date_str'] + extracted['time_str'],
     format='%Y%m%d%H%M%S'
