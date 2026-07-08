@@ -65,7 +65,11 @@ To submit the Kaleidoscope and/or HawkEars Jobs required to run this analysis si
 
 Note that the `-k` and `-w` arguments specify whether to run the Kaleidoscope and HawkEars portions onf the analysis pipeline respectively. The project name supplied to the. `-p` argument needs to be consistent with the one provided in the scratch directory setup step. `-t` specifies the confidence trheshold cutoff value that HawkEars will use for preliminary results filtering (the default value is 0.8). Finally, an email address can be supplied via the `-e` argument; this email will be used to provide updates on the status of the slurm job (when it is submitted, if it fails, and when it completes)
 
-Then wait for the submitted job to finish.
+Then wait for the submitted job to finish. If the email argument was provided you will recieve an email when the jobs begin and when they are complete. You can also check the status of the job by running the following command on sockeye:
+
+```bash
+squeue -u $USER
+```
 
 ## References
 Huus, J., Kelly, K. G., Bayne, E. M., & Knight, E. C. (2025). HawkEars: A regional, high-performance avian acoustic classifier. Ecological Informatics, 87, 103122.
