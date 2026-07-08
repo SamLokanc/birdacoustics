@@ -26,7 +26,6 @@ analyze.py \
  -i "${INPUT}" \
  -o "${OUTPUT}" \
  -m 0 \
- -p "${THRESHOLD}" \
  --date file \
  --lat 49.250 \
  --lon -123.236 \
