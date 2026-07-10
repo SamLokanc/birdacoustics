@@ -18,30 +18,26 @@ done
 shift $(( OPTIND - 1 ))
 
 # ----- Load Hawkears Module -----
-module use "${PROJECT}/software/modulefiles"
-module load "hawkers/1.0"
+module load intel-oneapi-compilers/2023.1.0 python/3.11.6
+source "${PROJECT}/acoustics_env/bin/activate"
 
 # ----- Analyze File -----
-analyze.py \
+hawkears analyze \
  -i "${INPUT}" \
  -o "${OUTPUT}" \
- -m 0 \
+ --cfg "${HAWKEARS_CONFIG}" \
  --date file \
  --lat 49.250 \
  --lon -123.236 \
  --threads "${THREADS}" \
  --rtype csv
 
-# ----- Activate Python Environment -----
-module load gcc python
-source "${PROJECT}/acoustics_env/bin/activate"
-
 # ----- Call Postprocessing Script -----
-python src/06-process_outputs.py \
- -l "${OUTPUT}"/HawkEars_labels.csv \
- -r "${OUTPUT}"/HawkEars_rarities.csv \
- -g "${INPUT}"/gps.csv \
- -s "${OUTPUT}"/out.csv
+#python src/06-process_outputs.py \
+# -l "${OUTPUT}"/HawkEars_labels.csv \
+# -r "${OUTPUT}"/HawkEars_rarities.csv \
+# -g "${INPUT}"/gps.csv \
+# -s "${OUTPUT}"/out.csv
 
 # ----- Clean Processed Data Directory -----
-rm -rf "${SCRATCH}/data/processed/*"
+#rm -rf "${SCRATCH}/data/processed/*"

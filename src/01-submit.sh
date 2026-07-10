@@ -52,6 +52,7 @@ export OUT="${SCRATCH}/results"
 export SETTINGS="${SCRATCH}/settings.ini"
 export KALEIDOSCOPE="${PROJECT}/kaleidoscope/kaleidoscope-5.6.8.sif"
 export LICENSE="${SCRATCH_BASE}/.kaleidoscope"
+export HAWKEARS_CONFIG="${PROJECT}/.hawkears_models/yaml/default.yaml"
 
 # ----- Set Config Variables -----
 export THRESHOLD
