@@ -18,26 +18,34 @@ done
 shift $(( OPTIND - 1 ))
 
 # ----- Load Hawkears Module -----
-module load intel-oneapi-compilers/2023.1.0 python/3.11.6
+module load intel-oneapi-compilers/2023.1.0 python/3.11.6 cuda/11.8.0
 source "${PROJECT}/acoustics_env/bin/activate"
+
+# ----- Create Necessary Temp Cache Directories -----
+export MPLCONFIGDIR=/tmp/matplotlib-$SLURM_JOB_ID
+export LIBROSA_CACHE_DIR=/tmp/librosa-$SLURM_JOB_ID
+export XDG_CACHE_HOME=/tmp/xdg-$SLURM_JOB_ID
+
+mkdir -p $MPLCONFIGDIR $LIBROSA_CACHE_DIR $XDG_CACHE_HOME
 
 # ----- Analyze File -----
 hawkears analyze \
  -i "${INPUT}" \
  -o "${OUTPUT}" \
- --cfg "${HAWKEARS_CONFIG}" \
  --date file \
  --lat 49.250 \
  --lon -123.236 \
  --threads "${THREADS}" \
- --rtype csv
+ --rtype csv \
+ --label names \
+ --min_score "${THRESHOLD}"
 
 # ----- Call Postprocessing Script -----
-#python src/06-process_outputs.py \
-# -l "${OUTPUT}"/HawkEars_labels.csv \
-# -r "${OUTPUT}"/HawkEars_rarities.csv \
-# -g "${INPUT}"/gps.csv \
-# -s "${OUTPUT}"/out.csv
+python src/06-process_outputs.py \
+ -l "${OUTPUT}"/scores.csv \
+ -r "${OUTPUT}"/rarities.csv \
+ -g "${INPUT}"/gps.csv \
+ -s "${OUTPUT}"/out.csv
 
 # ----- Clean Processed Data Directory -----
 #rm -rf "${SCRATCH}/data/processed/*"

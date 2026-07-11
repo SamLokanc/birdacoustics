@@ -22,6 +22,7 @@ shift $(( OPTIND-1 ))
 
 # ----- Set Scratch Base Directory -----
 export SCRATCH_BASE="/scratch/st-mgmitche-1"
+export PROJECT="/arc/project/st-mgmitche-1"
 
 # ----- Scratch Directory Creation -----
 # Check if no directory matching the pattern exists OR if the
@@ -102,6 +103,12 @@ if [[ ! -d "${SCRATCH}/slurm" ]]; then
 else
  echo " Slurm log directory already exists." >&2
 fi
+
+# ----- Initialize Scratch for Hawkears -----
+module load intel-oneapi-compilers/2023.1.0 python/3.11.6 cuda/11.8.0
+source "${PROJECT}/acoustics_env/bin/activate"
+
+hawkears init --dest "${SCRATCH}"
 
 # ----- Sync Source Files -----
 # Move all script files to the scratch directory since batch

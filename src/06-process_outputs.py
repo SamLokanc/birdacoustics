@@ -27,9 +27,9 @@ rarities = pd.read_csv(args.rarities_csv)
 gps = (
     pd.read_csv(
         args.gps_csv,
-        names=['date','time','latitude','NA','longitude','EW','filename','label'], 
+        names=['date','time','latitude','NA','longitude','EW','recording','label'], 
         header=0,
-        usecols=['latitude', 'longitude', 'filename']
+        usecols=['latitude', 'longitude', 'recording']
     ).dropna()
 )
 
@@ -38,9 +38,9 @@ gps = (
 #    dfs
 # 2) make longitude column accurate to reflect west of prime
 #    meridian
-gps['filename'] = (
-    gps['filename']
-    .str.replace(r'_\d+_', '_', n=1, regex=True) + '.wav'
+gps['recording'] = (
+    gps['recording']
+    .str.replace(r'_\d+_', '_', n=1, regex=True)
 )
 gps['longitude'] = gps['longitude'] * -1
 
@@ -53,23 +53,23 @@ rarities['rare'] = True
 all_labels = (
     pd.concat([labels, rarities])
     .reset_index(drop=True)
-    .sort_values(by=['filename', 'start_time'])
+    .sort_values(by=['recording', 'start_time'])
 )
 
 # ----- Add gps Coordinates to all_labels -----
 # Perform a left merge on the gps and all_labels dfs.
 all_labels_gps = pd.merge(
-    left=all_labels, 
+    left=all_labels,
     right=gps,
     how='left',
-    on='filename'
+    on='recording'
 )
 
 # ----- Process Datetimes -----
 # Using regular expressions to extract the date and time of recording,
 # converts to a string that will be easily readable by R's lubridate
 # package.
-extracted = all_labels_gps['filename'].str.extract(r'^(.*?)_(\d{8})_(\d{6})_(\d{3})')
+extracted = all_labels_gps['recording'].str.extract(r'^(.*?)_(\d{8})_(\d{6})_(\d{3})')
 extracted.columns = ['recorder_id', 'date_str', 'time_str', 'seq']
 
 all_labels_gps['recorder_id'] = extracted['recorder_id']
