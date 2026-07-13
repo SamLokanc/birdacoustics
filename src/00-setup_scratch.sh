@@ -11,18 +11,19 @@ set -euo pipefail
 #       convention (default: birdacoustics).
 FORCE=0
 PROJECT_NAME="birdacoustics"
-while getopts "fp:" flag; do
+while getopts "fp:a:" flag; do
  case $flag in
   f) FORCE=1 ;;
   p) PROJECT_NAME="$OPTARG" ;;
+  a) ALLOC_NAME="$OPTARG" ;;
   \?) echo "ERROR: Invalid option, exiting..." >&2; exit 1;;
  esac
 done
 shift $(( OPTIND-1 ))
 
 # ----- Set Scratch Base Directory -----
-export SCRATCH_BASE="/scratch/st-mgmitche-1"
-export PROJECT="/arc/project/st-mgmitche-1"
+export SCRATCH_BASE="/scratch/${ALLOC_NAME}"
+export PROJECT="/arc/project/${ALLOC_NAME}"
 
 # ----- Scratch Directory Creation -----
 # Check if no directory matching the pattern exists OR if the

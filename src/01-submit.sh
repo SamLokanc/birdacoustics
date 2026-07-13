@@ -15,13 +15,14 @@ RUN_KAL=0
 RUN_HAWK=0
 PROJECT_NAME="birdacoustics"
 EMAIL=""
-while getopts "kwp:t:e:" flag; do
+while getopts "kwp:t:e:a:" flag; do
  case $flag in
   k) RUN_KAL=1 ;;
   w) RUN_HAWK=1 ;;
   p) PROJECT_NAME="$OPTARG" ;;
   t) THRESHOLD="$OPTARG" ;;
   e) EMAIL="$OPTARG" ;;
+  a) ALLOC_NAME="$OPTARG" ;;
   \?) echo "ERROR: Invalid option, exiting..." >&2; exit 1;;
  esac
 done
@@ -31,7 +32,7 @@ shift $(( OPTIND-1 ))
 # This script expects setup_scratch.sh to have already been run.
 # It picks the most recent matching directory, same convention
 # used by the setup script.
-SCRATCH_BASE="/scratch/st-mgmitche-1"
+SCRATCH_BASE="/scratch/${ALLOC_NAME}"
 if ! compgen -G "${SCRATCH_BASE}/${USER}/${USER}_${PROJECT_NAME}_*" > /dev/null; then
  echo "ERROR: No scratch directory found for project '${PROJECT_NAME}'." >&2
  echo " Run src/00-setup_scratch.sh first." >&2
@@ -43,7 +44,7 @@ export SCRATCH=$(
  head -n 1)
 
 # ----- Set Project Directory -----
-export PROJECT="/arc/project/st-mgmitche-1"
+export PROJECT="/arc/project/${ALLOC_NAME}"
 
 # ----- Set Path Variables -----
 export IN_RAW="${SCRATCH}/data/raw"
