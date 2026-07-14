@@ -6,7 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=60G
-#SBATCH --job-name=birdacoustics_hawkears
+#SBATCH --job-name=hawkears
 #SBATCH -e slurm/%j.err
 #SBATCH -o slurm/%j.out
 #SBATCH --mail-type=ALL
