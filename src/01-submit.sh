@@ -79,6 +79,7 @@ KAL_JOBID=""
 
 if [[ "${RUN_KAL}" -eq 1 ]]; then
  KAL_JOBID=$(sbatch \
+  --account="${ALLOC_NAME}" \
   --chdir="${SCRATCH}" \
   --export=ALL \
   --parsable \
@@ -90,6 +91,7 @@ fi
 
 if [[ "${RUN_HAWK}" -eq 1 ]]; then
  HAWK_SBATCH_ARGS=(
+  --account="${ALLOC_NAME}-gpu"
   --chdir="${SCRATCH}"
   --export=ALL
   --parsable

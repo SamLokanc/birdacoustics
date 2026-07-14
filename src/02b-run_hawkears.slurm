@@ -2,7 +2,6 @@
 #SBATCH --partition=gpu
 #SBATCH --gpus=1
 #SBATCH --time=5:00:00
-#SBATCH --account=st-mgmitche-1-gpu
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
