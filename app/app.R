@@ -98,7 +98,7 @@ ui <- page_sidebar(
       "Confidence Threshold",
       min = 0,
       max = 1,
-      value = 0,
+      value = min(acoustic_data$score),
     ),
     
     input_switch(
@@ -276,28 +276,32 @@ ui <- page_sidebar(
         col_widths = c(4, 4, 4),
         card(
           card_header(
-            style = "display: flex; justify-content: space-between; align-items: center;",
-            "Recorder Activity Over Time",
-            selectInput(
-              "heatmap_timeunit",
-              "Time Unit:",
-              choices = c("Hour" = "hour", "Date" = "date", "Month" = "month", "Year" = "year"),
-              selected = "date",
-              width = "150px"
+            div(
+              p("Recorder Activity Over Time"),
+              style = "display: flex; justify-content: space-between; align-items: center;",
+              selectInput(
+                "heatmap_timeunit",
+                "Time Unit:",
+                choices = c("Hour" = "hour", "Date" = "date", "Month" = "month", "Year" = "year"),
+                selected = "date",
+                width = "150px"
+              )
             )
           ),
           plotlyOutput("activity_heatmap")
         ),
         card(
           card_header(
-            style = "display: flex; justify-content: space-between; align-items: center;",
-            "Detections Over Time",
-            selectInput(
-              "detections_timeunit",
-              "Time Unit:",
-              choices = c("Hour" = "hour", "Date" = "date", "Month" = "month", "Year" = "year"),
-              selected = "date",
-              width = "150px"
+            div(
+              p("Detections Over Time"),
+              style = "display: flex; justify-content: flex-end; gap: 1rem;",
+              selectInput(
+                "detections_timeunit",
+                "Time Unit:",
+                choices = c("Hour" = "hour", "Date" = "date", "Month" = "month", "Year" = "year"),
+                selected = "date",
+                width = "150px"
+              )
             )
           ),
           plotlyOutput("detections_curve")
