@@ -19,7 +19,18 @@ Below is a table containing all the scripts (within in the `src/` directory) and
 | `05-analyze_hawkears.sh` | Loads `HawkEars` as a module and then runs an analysis. |
 | `06-process_outputs.py` | Does final processing of the Kaleidoscope/Hawkears outputs. Extracts datetimes, attaches gps coordinates, saves .csv file |
 
-## Prerequisites / Setup
+## Prerequisites
+
+### Software
+This project assumes that the necessary software (Kaleidoscope and Hawkears) are downloaded and installed on Sockeye. If they have since been removed please get in touch to help troubleshoot reinstalling the software.
+
+### Kaleidoscope License
+An active Kaleidoscope license exists on sockeye for the `se060` node. Kaleidoscope limits the amount of active licenses by device, meaning that the license can only be activated on one compute node. This can significantly impact the amount of time required by the SLURM workload manager to allocate reseources to run a job.
+
+If the the job fails because of an inactive kaleidoscope license you will have to manually reactivate it. Again, please get in touch to troubleshoot if this occurs.
+
+## Setup
+
 This data pipeline is intended to be run on an ARC computing cluster environment that uses the SLURM workload manager. More specifically, it is intended to run on the University of British Columbia's [Sockeye computing cluster](https://arc.ubc.ca/compute-storage/ubc-arc-sockeye). Clone this repository by navigating to your home directory on the computing cluster and entering one of the following commands:
 
 ### Cloning the Repo
@@ -35,21 +46,19 @@ Otherwise you can run:
 cd ~ && git clone https://github.com/SamLokanc/birdacoustics.git && cd birdacoustics
 ```
 
-### Kaleidoscope License
-An active Kaleidoscope license exists on sockeye for the `se007` node. Kaleidoscope limits the amount of active licenses by device, meaning that the license can only be activated on one compute node. This can significantly impact the amount of time required by the SLURM workload manager to allocate reseources to run a job.
-
-If the the job fails because of an inactive kaleidoscope license you will have to manually reactivate it.
-
 ## Usage
 
 ### Scratch Directory Set-up
 Due to memory and job submission constraints on Sockeye cluster, the pipeline requires a scratch directory for data to be stored in and jobs to be submitted from. In order to set up the scratch directory run the following command from within the cloned repo:
 
 ```bash
-./src/00-setup_scratch.sh -p <project name>
+./src/00-setup_scratch.sh -p <project name> -a <allocation_name>
 ```
 
-Note that the project name is only used for naming the scratch directory. This should be descriptive to allow for easier file navigation.
+| `00-setup_scratch.sh` Arguments | Description |
+| --- | --- |
+| `-p` | **Project Name**: Used for naming and organization, should be descriptive to allow for easier file navigation. |
+| `-a` | **Allocation Name**: Used for navigation and Slurm authorization. |
 
 ### Importing Data
 Once the scratch directory is set up you can import acoustic data using your desired method. Note that the pipeline was designed to work on either `.w4v` or `.wav` files. If your acoustic files are in the `.w4v` format, import them to the `data/raw` subdirectory within the scratch directory, then run the analysis using both the Kaleidoscope and HawkEars options in the next step. If your acoustic files are in the `.wav` format, import them to the `data/processed` subdirectory within the scratch direrctory, then run the analysis using only the HawkEars option in the next step.
@@ -60,12 +69,19 @@ Note that in order for the analysis pipeline to succeed the names of these files
 To submit the Kaleidoscope and/or HawkEars Jobs required to run this analysis simply run the following command:
 
 ```bash
-./src/01-submit.sh -p <project name> -k -w -t <threshold cutoff value> -e <email address>
+./src/01-submit.sh -p <project name> -a <allocation_name> -t <threshold cutoff value> -e <email address> -k -w
 ```
 
-Note that the `-k` and `-w` arguments specify whether to run the Kaleidoscope and HawkEars portions onf the analysis pipeline respectively. The project name supplied to the. `-p` argument needs to be consistent with the one provided in the scratch directory setup step. `-t` specifies the confidence trheshold cutoff value that HawkEars will use for preliminary results filtering (the default value is 0.8). Finally, an email address can be supplied via the `-e` argument; this email will be used to provide updates on the status of the slurm job (when it is submitted, if it fails, and when it completes)
+| `00-setup_scratch.sh` Arguments | Description |
+| --- | --- |
+| `-p` | **Project Name**: Used for naming and organization, should be descriptive to allow for easier file navigation. |
+| `-a` | **Allocation Name**: Used for navigation and Slurm authorization. |
+| `-t` | **Threshold**: Defines the minimum score to include for Hawkears predictions. |
+| `-e` | **Email** (Optional Argument): Email address to send job updaates to. |
+| `-k` | **Kaleidoscope Boolean** (Optional Flag): If specified then a kaleidoscope conversion will be run on .w4v files. |
+| `-w` | **Hawkears Boolean** (Optional Flag): If specified then a Hawkears analysis will be run on the processed .wav files. |
 
-Then wait for the submitted job to finish. If the email argument was provided you will recieve an email when the jobs begin and when they are complete. You can also check the status of the job by running the following command on sockeye:
+Once run, wait for the submitted job to finish. If the email argument was provided you will recieve an email when the jobs begin and when they are complete. You can also check the status of the job by running the following command on sockeye:
 
 ```bash
 squeue -u $USER
