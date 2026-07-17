@@ -19,7 +19,7 @@ THRESHOLD="0.9"
 LAT="49.250"
 LON="-123.236"
 LABEL="names"
-while getopts "kwp:t:e:a:d:n:c:" flag; do
+while getopts "kwp:t:e:a:d:n:l:" flag; do
  case $flag in
   k) RUN_KAL=1 ;;
   w) RUN_HAWK=1 ;;
