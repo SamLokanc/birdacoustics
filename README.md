@@ -71,7 +71,7 @@ To submit the Kaleidoscope and/or HawkEars Jobs required to run this analysis si
 | --- | --- |
 | `-p` | **Project Name**: Used for naming and organization, should be descriptive to allow for easier file navigation. |
 | `-a` | **Allocation Name**: Used for navigation and Slurm authorization. |
-| `-t` | **Threshold**: Defines the minimum score to include for Hawkears predictions. |
+| `-t` | **Threshold** (Optional Argument; default=0.9): Defines the minimum score to include for Hawkears predictions. |
 | `-e` | **Email** (Optional Argument): Email address to send job updaates to. |
 | `-k` | **Kaleidoscope Boolean** (Optional Flag): If specified then a kaleidoscope conversion will be run on .w4v files. |
 | `-w` | **Hawkears Boolean** (Optional Flag): If specified then a Hawkears analysis will be run on the processed .wav files. |
