@@ -15,6 +15,7 @@ RUN_KAL=0
 RUN_HAWK=0
 PROJECT_NAME="birdacoustics"
 EMAIL=""
+THRESHOLD="0.9"
 while getopts "kwp:t:e:a:" flag; do
  case $flag in
   k) RUN_KAL=1 ;;
