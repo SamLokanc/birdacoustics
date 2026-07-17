@@ -34,13 +34,8 @@ If the the job fails because of an inactive kaleidoscope license you will have t
 This data pipeline is intended to be run on an ARC computing cluster environment that uses the SLURM workload manager. More specifically, it is intended to run on the University of British Columbia's [Sockeye computing cluster](https://arc.ubc.ca/compute-storage/ubc-arc-sockeye). Clone this repository by navigating to your home directory on the computing cluster and entering one of the following commands:
 
 ### Cloning the Repo
-If you have an ssh key set up on the cluster (**recommended for security** [see this guide here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)),
 
-```bash
-cd ~ && git clone git@github.com:SamLokanc/birdacoustics.git && cd birdacoustics
-```
-
-Otherwise you can run:
+Clone the repo using the following command:
 
 ```bash
 cd ~ && git clone https://github.com/SamLokanc/birdacoustics.git && cd birdacoustics
@@ -86,6 +81,22 @@ Once run, wait for the submitted job to finish. If the email argument was provid
 ```bash
 squeue -u $USER
 ```
+
+### Viewing the Summary Dashboard
+
+To view the summary dashboard, first clone the repo to your local machine:
+
+```bash
+git clone https://github.com/SamLokanc/birdacoustics.git && cd birdacoustics
+```
+
+Then copy the output data from the cluster to the data directory on your local machine:
+
+```bash
+scp <cwl>@sockeye.arc.ubc.ca:/scratch/<allocation-name>/<cwl>/<cwl>_<project-name>_<YYYYMMDD>/results/out.csv data/out.csv
+```
+
+You can then open `app/app.R` in R studio and click the "Run App" button in the top right corner to view a dashboard summary of your HawkEars run.
 
 ## References
 Huus, J., Kelly, K. G., Bayne, E. M., & Knight, E. C. (2025). HawkEars: A regional, high-performance avian acoustic classifier. Ecological Informatics, 87, 103122.
