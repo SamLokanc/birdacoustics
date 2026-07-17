@@ -18,8 +18,8 @@ EMAIL=""
 THRESHOLD="0.9"
 LAT="49.250"
 LON="-123.236"
-CODE="name"
-while getopts "kwp:t:e:a:l:n:c:" flag; do
+LABEL="names"
+while getopts "kwp:t:e:a:d:n:c:" flag; do
  case $flag in
   k) RUN_KAL=1 ;;
   w) RUN_HAWK=1 ;;
@@ -27,9 +27,9 @@ while getopts "kwp:t:e:a:l:n:c:" flag; do
   t) THRESHOLD="$OPTARG" ;;
   e) EMAIL="$OPTARG" ;;
   a) ALLOC_NAME="$OPTARG" ;;
-  l) LAT="$OPTARG" ;;
+  d) LAT="$OPTARG" ;;
   n) LON="$OPTARG" ;;
-  c) CODE="$OPTARG" ;;
+  l) LABEL="$OPTARG" ;;
   \?) echo "ERROR: Invalid option, exiting..." >&2; exit 1;;
  esac
 done
@@ -66,7 +66,7 @@ export HAWKEARS_CONFIG="${PROJECT}/.hawkears_models/yaml/default.yaml"
 export THRESHOLD
 export LAT
 export LON
-export CODE
+export LABEL
 
 # ----- Directory Existance Sanity Check -----
 # Check SCRATCH is defined. If it does not exit the program.
