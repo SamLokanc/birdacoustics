@@ -16,7 +16,9 @@ RUN_HAWK=0
 PROJECT_NAME="birdacoustics"
 EMAIL=""
 THRESHOLD="0.9"
-while getopts "kwp:t:e:a:" flag; do
+LAT="49.250"
+LON="-123.236"
+while getopts "kwp:t:e:a:l:n:" flag; do
  case $flag in
   k) RUN_KAL=1 ;;
   w) RUN_HAWK=1 ;;
@@ -24,6 +26,8 @@ while getopts "kwp:t:e:a:" flag; do
   t) THRESHOLD="$OPTARG" ;;
   e) EMAIL="$OPTARG" ;;
   a) ALLOC_NAME="$OPTARG" ;;
+  l) LAT="$OPTARG" ;;
+  n) LON="$OPTARG" ;;
   \?) echo "ERROR: Invalid option, exiting..." >&2; exit 1;;
  esac
 done
@@ -58,6 +62,8 @@ export HAWKEARS_CONFIG="${PROJECT}/.hawkears_models/yaml/default.yaml"
 
 # ----- Set Config Variables -----
 export THRESHOLD
+export LAT
+export LON
 
 # ----- Directory Existance Sanity Check -----
 # Check SCRATCH is defined. If it does not exit the program.
