@@ -278,13 +278,15 @@ ui <- page_sidebar(
           card_header(
             div(
               p("Recorder Activity Over Time"),
-              style = "display: flex; justify-content: space-between; align-items: center;",
-              selectInput(
-                "heatmap_timeunit",
-                "Time Unit:",
-                choices = c("Hour" = "hour", "Date" = "date", "Month" = "month", "Year" = "year"),
-                selected = "date",
-                width = "150px"
+              div(
+                style = "display: flex; justify-content: space-between; align-items: center;",
+                selectInput(
+                  "heatmap_timeunit",
+                  "Time Unit:",
+                  choices = c("Hour" = "hour", "Date" = "date", "Month" = "month", "Year" = "year"),
+                  selected = "date",
+                  width = "150px"
+                )
               )
             )
           ),
@@ -294,13 +296,22 @@ ui <- page_sidebar(
           card_header(
             div(
               p("Detections Over Time"),
-              style = "display: flex; justify-content: flex-end; gap: 1rem;",
-              selectInput(
-                "detections_timeunit",
-                "Time Unit:",
-                choices = c("Hour" = "hour", "Date" = "date", "Month" = "month", "Year" = "year"),
-                selected = "date",
-                width = "150px"
+              div(
+                style = "display: flex; justify-content: flex-end; gap: 1rem;",
+                selectInput(
+                  "detections_timeunit",
+                  "Time Unit:",
+                  choices = c("Hour" = "hour", "Date" = "date", "Month" = "month", "Year" = "year"),
+                  selected = "date",
+                  width = "150px"
+                ),
+                selectInput(
+                  "detections_agg_type",
+                  "Aggregation:",
+                  choices = c("Sum" = "sum", "Mean" = "mean", "Median" = "median"),
+                  selected = "sum",
+                  width = "150px"
+                )
               )
             )
           ),
@@ -472,6 +483,7 @@ server <- function(input, output, session) {
     }
     
     time_unit <- input$detections_timeunit
+    agg_type <- input$detections_agg_type
     
     if (time_unit == "hour") {
       data <- data |>
@@ -487,10 +499,20 @@ server <- function(input, output, session) {
         mutate(time_period = paste(year(datetime)))
     }
     
-    summary_data <- data |>
+    detections_by_recorder <- data |>
+      group_by(time_period, recorder_id) |>
+      summarise(detection_count = n(), .groups = "drop")
+    
+    summary_data <- detections_by_recorder |>
       group_by(time_period) |>
       summarise(
-        detections = n(),
+        detections = if (agg_type == "sum") {
+          sum(detection_count, na.rm = TRUE)
+        } else if (agg_type == "mean") {
+          mean(detection_count, na.rm = TRUE)
+        } else if (agg_type == "median") {
+          median(detection_count, na.rm = TRUE)
+        },
         .groups = "drop"
       ) |>
       arrange(time_period)
