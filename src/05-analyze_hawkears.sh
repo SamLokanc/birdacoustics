@@ -33,8 +33,8 @@ hawkears analyze \
  -i "${INPUT}" \
  -o "${OUTPUT}" \
  --date file \
- --lat 49.250 \
- --lon -123.236 \
+ --lat "${LAT}" \
+ --lon "${LON}" \
  --threads "${THREADS}" \
  --rtype csv \
  --label names \
@@ -46,6 +46,3 @@ python src/06-process_outputs.py \
  -r "${OUTPUT}"/rarities.csv \
  -g "${INPUT}"/gps.csv \
  -s "${OUTPUT}"/out.csv
-
-# ----- Clean Processed Data Directory -----
-#rm -rf "${SCRATCH}/data/processed/*"
