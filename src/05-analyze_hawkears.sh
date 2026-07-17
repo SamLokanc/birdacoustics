@@ -37,7 +37,7 @@ hawkears analyze \
  --lon "${LON}" \
  --threads "${THREADS}" \
  --rtype csv \
- --label names \
+ --label "${LABEL}" \
  --min_score "${THRESHOLD}"
 
 # ----- Call Postprocessing Script -----
