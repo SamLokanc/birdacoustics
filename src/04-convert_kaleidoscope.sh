@@ -20,10 +20,9 @@ shift $(( OPTIND - 1 ))
 module load gcc/9.4.0 apptainer/1.3.1
 
 # ----- Run Kaleidoscope File Conversion -----
-apptainer \
- exec \
- --bind "${LICENSE}":/home/$USER/.kaleidoscope \
- "${KALEIDOSCOPE}" \
- kaleidoscope-cli \
- --accept-license \
- --batch "${SETTINGS}"
+apptainer exec \
+  --home /scratch/st-mgmitche-1/ \
+  "${KALEIDOSCOPE}" \
+  kaleidoscope-cli \
+  --accept-license \
+  --batch "${SETTINGS}"
