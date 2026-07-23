@@ -39,7 +39,7 @@ shift $(( OPTIND-1 ))
 # This script expects setup_scratch.sh to have already been run.
 # It picks the most recent matching directory, same convention
 # used by the setup script.
-SCRATCH_BASE="/scratch/${ALLOC_NAME}"
+export SCRATCH_BASE="/scratch/${ALLOC_NAME}"
 if ! compgen -G "${SCRATCH_BASE}/${USER}/${USER}_${PROJECT_NAME}_*" > /dev/null; then
  echo "ERROR: No scratch directory found for project '${PROJECT_NAME}'." >&2
  echo " Run src/00-setup_scratch.sh first." >&2

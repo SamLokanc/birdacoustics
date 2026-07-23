@@ -21,7 +21,7 @@ module load gcc/9.4.0 apptainer/1.3.1
 
 # ----- Run Kaleidoscope File Conversion -----
 apptainer exec \
-  --home /scratch/st-mgmitche-1/ \
+  --home "${SCRATCH_BASE}" \
   "${KALEIDOSCOPE}" \
   kaleidoscope-cli \
   --accept-license \
