@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=20G
 #SBATCH --job-name=kaleidoscope
-#SBATCH --nodelist=se060
+#SBATCH --nodelist=se083
 #SBATCH --partition=skylake
 #SBATCH -e slurm/%j.err
 #SBATCH -o slurm/%j.out
