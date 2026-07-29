@@ -68,7 +68,8 @@ To submit the Kaleidoscope and/or HawkEars Jobs required to run this analysis si
   -p <project name> \
   -a <allocation_name> \
   -t <threshold cutoff value> \
-  -e <email address> -d <latitude> \
+  -e <email address> \
+  -d <latitude> \
   -n <longitude> \
   -l <label_format> \
   -k \
