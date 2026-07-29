@@ -64,19 +64,22 @@ Note that in order for the analysis pipeline to succeed the names of these files
 To submit the Kaleidoscope and/or HawkEars Jobs required to run this analysis simply run the following command:
 
 ```bash
-./src/01-submit.sh -p <project name> -a <allocation_name> -t <threshold cutoff value> -e <email address> -k -w
+./src/01-submit.sh -p <project name> -a <allocation_name> -t <threshold cutoff value> -e <email address> -d <latitude> -n <longitude> -l <label_format> -k -w
 ```
 
 | `00-setup_scratch.sh` Arguments | Description |
 | --- | --- |
-| `-p` | **Project Name**: Used for naming and organization, should be descriptive to allow for easier file navigation. |
 | `-a` | **Allocation Name**: Used for navigation and Slurm authorization. |
-| `-t` | **Threshold** (Optional Argument; default=0.9): Defines the minimum score to include for Hawkears predictions. |
-| `-e` | **Email** (Optional Argument): Email address to send job updaates to. |
+| `-p` | **Project Name**: Used for naming and organization, should be descriptive to allow for easier file navigation. |
 | `-k` | **Kaleidoscope Boolean** (Optional Flag): If specified then a kaleidoscope conversion will be run on .w4v files. |
-| `-w` | **Hawkears Boolean** (Optional Flag): If specified then a Hawkears analysis will be run on the processed .wav files. |
+| `-w` | **HawkEars Boolean** (Optional Flag): If specified then a HawkEars analysis will be run on the processed .wav files. |
+| `-t` | **Threshold** (Optional Argument; default=0.9): Defines the minimum score to include for HawkEars predictions. |
+| `-e` | **Email** (Optional Argument): Email address to send job updates to. |
+| `-d` | **Latitude** (Optional Argument; default=49.250): Latitude for HawkEars to use for inference. |
+| `-n` | **Longitude** (Optional Argument; default=-123.236): Longitude for HawkEars to use for inference. |
+| `-l` | **Label** (Optional Argument; default=names): Label format for HawkEars output. Valid options include names (common names), codes (4-letter banding codes), alt-codes (6-letter banding codes), alt-names (scientific names). |
 
-Once run, wait for the submitted job to finish. If the email argument was provided you will recieve an email when the jobs begin and when they are complete. You can also check the status of the job by running the following command on sockeye:
+Once run, wait for the submitted job to finish. If the email argument was provided you will receive an email when the jobs begin and when they are complete. You can also check the status of the job by running the following command on sockeye:
 
 ```bash
 squeue -u $USER
