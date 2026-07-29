@@ -35,16 +35,22 @@ This data pipeline is intended to be run on an ARC computing cluster environment
 
 ### Cloning the Repo
 
-Clone the repo using the following command:
+Clone the repo using the following command **if this is your first time installing**:
 
 ```bash
 cd ~ && git clone https://github.com/SamLokanc/birdacoustics.git && cd birdacoustics
 ```
 
+Pull the repo **if you have already cloned it in the past**:
+
+```bash
+cd ~/birdacoustics && git pull origin main
+```
+
 ## Usage
 
 ### Scratch Directory Set-up
-Due to memory and job submission constraints on Sockeye cluster, the pipeline requires a scratch directory for data to be stored in and jobs to be submitted from. In order to set up the scratch directory run the following command from within the cloned repo:
+Due to memory and job submission constraints on Sockeye cluster, the pipeline requires a scratch directory for data to be stored in and jobs to be submitted from. In order to set up the scratch directory run the following command from within the cloned repo (it is a good idea to run this before each job submission):
 
 ```bash
 ./src/00-setup_scratch.sh -p <project name> -a <allocation_name>
