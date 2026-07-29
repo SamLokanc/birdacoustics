@@ -18,6 +18,7 @@ Below is a table containing all the scripts (within in the `src/` directory) and
 | `04-convert_kaleidoscope.sh`| Uses the `Kaleidoscope` apptainer to batch convert input files (.w4v) to a consistent (.wav) format |
 | `05-analyze_hawkears.sh` | Loads `HawkEars` as a module and then runs an analysis. |
 | `06-process_outputs.py` | Does final processing of the Kaleidoscope/Hawkears outputs. Extracts datetimes, attaches gps coordinates, saves .csv file |
+| `util/download_results.sh` | Utility script to download the results of the cluster run to your local machine. |
 
 ## Prerequisites
 
@@ -53,7 +54,7 @@ cd ~/birdacoustics && git pull origin main
 Due to memory and job submission constraints on Sockeye cluster, the pipeline requires a scratch directory for data to be stored in and jobs to be submitted from. In order to set up the scratch directory run the following command from within the cloned repo (it is a good idea to run this before each job submission):
 
 ```bash
-./src/00-setup_scratch.sh -p <project name> -a <allocation_name>
+./src/00-setup_scratch.sh -p <project name> -a <allocation name>
 ```
 
 | `00-setup_scratch.sh` Arguments | Description |
@@ -108,10 +109,18 @@ To view the summary dashboard, first clone the repo to your local machine:
 git clone https://github.com/SamLokanc/birdacoustics.git && cd birdacoustics
 ```
 
-Then copy the output data from the cluster to the data directory on your local machine:
+Then copy the output data from the cluster to the data directory on your local machine using the utility script:
+
+| `download_results.sh` Arguments | Description |
+| --- | --- |
+| `-c` | **CWL**: For file navigation within the cluster. |
+| `-a` | **Allocation Name**: For file navigation within the cluster. |
+| `-p` | **Project Name**: For file navigation within the cluster. |
+| `-d` | **Date (of project folder creation)**: For file navigation within the cluster. If you have multiple projects with the same name, the date in the directory name is used for differentiation. |
+| `-o` | **Output Name**: The desired name of the output file within |
 
 ```bash
-scp <cwl>@sockeye.arc.ubc.ca:/scratch/<allocation-name>/<cwl>/<cwl>_<project-name>_<YYYYMMDD>/results/out.csv data/out.csv
+./src/util/download_results.sh -c <CWL> -a <allocation name> -p <project name> -d <date> -o <output name>
 ```
 
 You can then open `app/app.R` in R studio and click the "Run App" button in the top right corner to view a dashboard summary of your HawkEars run.
