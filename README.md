@@ -1,4 +1,24 @@
 # birdacoustics
+
+## Table of Contents
+
+1. [Project Overview](#project-overview)
+2. [Workflow](#workflow)
+3. [Prerequisites](#prerequisites)
+   - [Software](#software)
+   - [Kaleidoscope License](#kaleidoscope-license)
+4. [Setup](#setup)
+   - [Cloning the Repo](#cloning-the-repo)
+5. [Usage](#usage)
+   - [Scratch Directory Set-up](#scratch-directory-set-up)
+   - [Importing Data](#importing-data)
+   - [Submitting jobs](#submitting-jobs)
+   - [Viewing the Summary Dashboard](#viewing-the-summary-dashboard)
+6. [Configuration](#configuration)
+   - [Slurm Specifications](#slurm-specifications)
+   - [Exclude Species](#exclude-species)
+7. [References](#references)
+
 ## Project Overview
 
 Birds serve as great bioindicators since they occupy a wide range of habitats and their populations respond quickly to environmental change (Kułaga, 2019). It is therefore advantageous to monitor bird populations since they allow for the quick detection of environmental stresses over the entire ecosystem. Detecting these changes is imperitive to measure the impacts of our own development on ecosystems as well as evaluate any measures being taken to remedy our harms. 
