@@ -170,7 +170,7 @@ ui <- page_sidebar(
                     HawkEars model."),
           ),
           h5("Download Button"),
-          p("The sidebard also contains a download button which allows users to
+          p("The sidebar also contains a download button which allows users to
             download the filtered dataset for further analysis."),
           
           h5("Displayed Information"),
