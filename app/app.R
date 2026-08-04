@@ -5,18 +5,6 @@ library(tidyverse)
 library(plotly)
 library(lubridate)
 
-# Load and process data with datetime parsing
-acoustic_data <- read.csv("../data/out.csv") |>
-  mutate(
-    datetime = as.POSIXct(timestamp, format = "%Y-%m-%dT%H:%M:%S"),
-    date = as.Date(datetime),
-    hour = hour(datetime),
-    month = month(datetime)
-  )
-
-min_date <- min(acoustic_data$date, na.rm = TRUE)
-max_date <- max(acoustic_data$date, na.rm = TRUE)
-
 data_dir <- "../data"
 
 csv_files <- list.files(
@@ -65,13 +53,9 @@ ui <- page_sidebar(
         selectizeInput(
           "location_filter",
           "Recorder",
-          choices = unique(acoustic_data$recorder_id),
-          selected = unique(acoustic_data$recorder_id),
-          multiple = TRUE,
-          options = list(
-            placeholder = "Select recorder(s)...",
-            plugins = list("remove_button")
-          )
+          choices = NULL,
+          selected = NULL,
+          multiple = TRUE
         ),
         input_switch("recorder_all", "All", TRUE)
       )
@@ -82,23 +66,19 @@ ui <- page_sidebar(
         selectizeInput(
           "species_filter",
           "Species",
-          choices = unique(acoustic_data$name),
-          selected = unique(acoustic_data$name),
-          multiple = TRUE,
-          options  = list(
-            placeholder = "Select species...",
-            plugins = list("remove_button")
-          )
+          choices = NULL,
+          selected = NULL,
+          multiple = TRUE
         ),
-        input_switch("species_all", "All", TRUE),
+        input_switch("species_all", "All", TRUE)
       )
     ),
     
     dateRangeInput(
-      inputId = "date_filter",
-      label = "Date Range",
-      start = min_date,
-      end = max_date
+      "date_filter",
+      "Date Range",
+      start = Sys.Date(),
+      end = Sys.Date()
     ),
     
     card(
@@ -121,7 +101,7 @@ ui <- page_sidebar(
       "Confidence Threshold",
       min = 0,
       max = 1,
-      value = min(acoustic_data$score),
+      value = 0
     ),
     
     input_switch(
@@ -168,6 +148,9 @@ ui <- page_sidebar(
           p("The filters for this dashboard can be found in the sidebar and 
             allow the user to select data based on the following criteria:"),
           tags$ul(
+            tags$li(strong("Input File(s):"), 
+                    " Filter for any combination of input files contained in
+                    the data directory."),
             tags$li(strong("Recorder:"), 
                     " Filter for any combination of acoustic recording units. 
                     This allows the user to filter by location."),
@@ -349,8 +332,26 @@ ui <- page_sidebar(
 )
 
 server <- function(input, output, session) {
+  acoustic_data <- reactive({
+    
+    req(input$file_filter)
+    
+    files <- file.path(data_dir, input$file_filter)
+    
+    bind_rows(
+      lapply(files, read.csv)
+    ) |>
+      mutate(
+        datetime = as.POSIXct(timestamp, format = "%Y-%m-%dT%H:%M:%S"),
+        date = as.Date(datetime),
+        hour = hour(datetime),
+        month = month(datetime)
+      )
+    
+  })
+  
   filtered_data <- reactive({
-    acoustic_data |>
+    acoustic_data() |>
       filter(
         # Date range filter
         date >= input$date_filter[1],
@@ -548,7 +549,7 @@ server <- function(input, output, session) {
       session,
       "species_filter",
       selected = if (input$species_all) {
-        unique(acoustic_data$name)
+        unique(acoustic_data()$name)
       } else {
         character(0)
       }
@@ -560,10 +561,43 @@ server <- function(input, output, session) {
       session,
       "location_filter",
       selected = if (input$recorder_all) {
-        unique(acoustic_data$recorder_id)
+        unique(acoustic_data()$recorder_id)
       } else {
         character(0)
       }
+    )
+  })
+  
+  observe({
+    data <- acoustic_data()
+  
+    updateSelectizeInput(
+      session,
+      "location_filter",
+      choices = unique(data$recorder_id),
+      selected = unique(data$recorder_id)
+    )
+  
+    updateSelectizeInput(
+      session,
+      "species_filter",
+      choices = unique(data$name),
+      selected = unique(data$name)
+    )
+  
+    updateDateRangeInput(
+      session,
+      "date_filter",
+      start = min(data$date),
+      end = max(data$date),
+      min = min(data$date),
+      max = max(data$date)
+    )
+  
+    updateSliderInput(
+      session,
+      "confidence_filter",
+      value = min(data$score, na.rm = TRUE)
     )
   })
   
