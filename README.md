@@ -103,10 +103,16 @@ squeue -u $USER
 
 ### Viewing the Summary Dashboard
 
-To view the summary dashboard, first clone the repo to your local machine:
+Clone the repo to your local machine **if this is your first time installing**:
 
 ```bash
 git clone https://github.com/SamLokanc/birdacoustics.git && cd birdacoustics
+```
+
+Pull the repo **if you have already cloned it in the past** (make sure you are within the birdacoustics directory):
+
+```bash
+git pull origin main
 ```
 
 Then copy the output data from the cluster to the data directory on your local machine using the utility script:
