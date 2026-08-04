@@ -169,6 +169,10 @@ ui <- page_sidebar(
                     " Toggle on to show only the rare species identified by the 
                     HawkEars model."),
           ),
+          h5("Download Button"),
+          p("The sidebard also contains a download button which allows users to
+            download the filtered dataset for further analysis."),
+          
           h5("Displayed Information"),
           p("The information displayed on the dashboard will react to the 
             filtering criteria that the user specified via the filters 
