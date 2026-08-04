@@ -48,6 +48,17 @@ Pull the repo **if you have already cloned it in the past**:
 cd ~/birdacoustics && git pull origin main
 ```
 
+## Configuration
+
+### Slurm Specifications
+This project submits two slurm jobs, each of which can be configured differently depending on the specific hardware requirements. The kaleidoscope job, defined in `src/02a-run_kaleidoscope.slurm`, has default settings requesting 4 cores, 2 hours of runtime, and 20GB of RAM.
+
+The second job that gets run is the HawkEars job, defined in `src/02b-run_hawkears.slurm`. This job has default settings requesting 8 cores, 10 hours of runtime, and 100GB of RAM. 
+
+Both of the default specifications should be more than enough for most use cases. In the event that you need to process a large number of files and receive a timeout error, consider processing the files in smaller batches and/or increasing the runtime requested by editing the SLURM directives a the beginning of `src/02a-run_kaleidoscope.slurm` and `src/02b-run_hawkears.slurm`. Ensure you run `src/00-setup_scratch.sh` after making any modifications to the `.slurm` scripts.
+
+### Exclude Species
+
 ## Usage
 
 ### Scratch Directory Set-up
