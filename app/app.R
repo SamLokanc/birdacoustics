@@ -17,6 +17,14 @@ acoustic_data <- read.csv("../data/out.csv") |>
 min_date <- min(acoustic_data$date, na.rm = TRUE)
 max_date <- max(acoustic_data$date, na.rm = TRUE)
 
+data_dir <- "../data"
+
+csv_files <- list.files(
+  data_dir,
+  pattern = "\\.csv$",
+  full.names = FALSE
+)
+
 ui <- page_sidebar(
   # ----- Styling -----
   theme = bs_theme(
@@ -36,7 +44,22 @@ ui <- page_sidebar(
   sidebar = sidebar(
     # ----- Filters -----
     strong("Filters"),
-    
+    card(
+      card_body(
+        selectizeInput(
+          "file_filter",
+          "Input File(s)",
+          choices = csv_files,
+          selected = NULL,
+          multiple = TRUE,
+          options = list(
+            placeholder = "Select data file(s)...",
+            plugins = list("remove_button")
+          )
+        ),
+        input_switch("file_all", "All", FALSE)
+      )
+    ),
     card(
       card_body(
         selectizeInput(
