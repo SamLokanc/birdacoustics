@@ -108,6 +108,7 @@ ui <- page_sidebar(
       "rare_filter",
       "Rare Species",
     ),
+    downloadButton("downloadData", "Download"),
   ),
   
   # ----- Tabs -----
@@ -771,6 +772,13 @@ server <- function(input, output, session) {
       ) |> 
       config(displayModeBar = FALSE)
   })
+  # ----- Download Data -----
+  output$downloadData <- downloadHandler(
+    filename = "dashboard_output.csv",
+    content = function(file) {
+      write.csv(filtered_data(), file)
+    }
+  )
 }
 
 shinyApp(ui = ui, server = server)
