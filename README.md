@@ -71,16 +71,7 @@ Note that in order for the analysis pipeline to succeed the names of these files
 To submit the Kaleidoscope and/or HawkEars Jobs required to run this analysis simply run the following command:
 
 ```bash
-./src/01-submit.sh \
-  -p <project name> \
-  -a <allocation_name> \
-  -t <threshold cutoff value> \
-  -e <email address> \
-  -d <latitude> \
-  -n <longitude> \
-  -l <label_format> \
-  -k \
-  -w
+./src/01-submit.sh -p <project name> -a <allocation_name> -t <threshold cutoff value> -e <email address> -d <latitude> -n <longitude> -l <label_format> -k -w
 ```
 
 | `00-setup_scratch.sh` Arguments | Description |
@@ -103,10 +94,16 @@ squeue -u $USER
 
 ### Viewing the Summary Dashboard
 
-To view the summary dashboard, first clone the repo to your local machine:
+Clone the repo to your local machine **if this is your first time installing**:
 
 ```bash
 git clone https://github.com/SamLokanc/birdacoustics.git && cd birdacoustics
+```
+
+Pull the repo **if you have already cloned it in the past** (make sure you are within the birdacoustics directory):
+
+```bash
+git pull origin main
 ```
 
 Then copy the output data from the cluster to the data directory on your local machine using the utility script:
